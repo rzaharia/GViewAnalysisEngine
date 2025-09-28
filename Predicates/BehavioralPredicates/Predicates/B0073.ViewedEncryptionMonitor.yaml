@@ -1,0 +1,33 @@
+id: B0073
+name: ViewedEncryptionMonitor
+signature: 'ViewedEncryptionMonitor(f: File) -> Bool'
+category: Behavior/RansomwareExfil
+description: Monitored encryption rate.
+scope:
+  object: action
+  format: generic
+mitre_attack: [T1486]
+trigger_logic:
+  positive:
+  - ui_event: viewedencryptionmonitor_opened
+  negative: []
+thresholds: {}
+confidence_rules:
+  - rule: event_observed
+    weight: 1.0
+evidence_binding:
+  captures:
+  - telemetry: [ui_events, audit_logs, sandbox_logs]
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C031  # 'Data Encrypted for Impact (T1486)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

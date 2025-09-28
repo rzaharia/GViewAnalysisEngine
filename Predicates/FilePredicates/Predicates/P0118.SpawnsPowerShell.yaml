@@ -1,0 +1,39 @@
+id: P0118
+name: SpawnsPowerShell
+signature: 'SpawnsPowerShell(f: File) -> Bool'
+category: Runtime/ProcessMemory
+description: **Set** if child process executable matches.
+scope:
+  object: file
+  format: generic
+mitre_attack: [T1055]
+trigger_logic:
+  positive:
+  - keywords:
+    - child
+    - process
+    - executable
+    - matches.
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: DynamicMonitoring
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C022  # 'Ten process injection techniques: survey of common and trending techniques'
+  - ref: C023  # 'Windows Process Injection in 2019: Gotta Catch Them All'
+  - ref: C024  # 'Process Injection (T1055)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

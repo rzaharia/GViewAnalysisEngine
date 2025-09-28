@@ -1,0 +1,38 @@
+id: P0269
+name: ArchiveBombHeuristic
+signature: 'ArchiveBombHeuristic(f: File) -> Bool'
+category: ArchiveInstallerAbuse
+description: Decompression ratio extreme. **Set** if size ratio exceeds threshold.
+scope:
+  object: file
+  format: ZIP/RAR/7z/MSI
+mitre_attack: [T1027, T1204.002, T1499]
+trigger_logic:
+  positive:
+  - decompression_ratio_gt: 50
+  negative:
+thresholds:
+  decompression_ratio_gt: 50
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C011  # 'How Threat Actors Are Adapting to a Post-Macro World'
+  - ref: C012  # 'Are threat actors turning to archives and disk images as macro usage dwindles?'
+  - ref: C013  # 'Identification and Disruption of QakBot Infrastructure (AA23-242A)'
+  - ref: C014  # 'Obfuscated Files or Information: LNK Icon Smuggling (T1027.012)'
+  - ref: C015  # 'Boot or Logon Autostart Execution: Shortcut Modification (T1547.009)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

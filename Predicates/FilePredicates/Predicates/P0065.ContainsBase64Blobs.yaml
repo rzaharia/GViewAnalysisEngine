@@ -1,0 +1,40 @@
+id: P0065
+name: ContainsBase64Blobs
+signature: 'ContainsBase64Blobs(f: File) -> Bool'
+category: Static/ContentIndicators
+description: Potential payloads. **Set** if long Base64/hex sequences detected.
+scope:
+  object: file
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - Potential
+    - payloads.
+    - long
+    - Base64
+  negative:
+thresholds:
+  min_blob_len: 60
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: StaticParsing
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  - ref: C028  # 'Obfuscated Files or Information (T1027)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

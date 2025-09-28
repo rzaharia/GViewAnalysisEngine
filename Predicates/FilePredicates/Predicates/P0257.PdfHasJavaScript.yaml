@@ -1,0 +1,36 @@
+id: P0257
+name: PdfHasJavaScript
+signature: 'PdfHasJavaScript(f: File) -> Bool'
+category: PDFSpecific
+description: Embedded JS. **Set** if `/JavaScript` or `/AA` dictionaries.
+scope:
+  object: file
+  format: PDF
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - Embedded
+    - JavaScript
+    - dictionaries.
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

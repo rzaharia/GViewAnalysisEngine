@@ -1,0 +1,33 @@
+id: B0042
+name: ViewedOverlay
+signature: 'ViewedOverlay(f: File) -> Bool'
+category: Behavior/PEStatic
+description: Overlay/extra data pane opened.
+scope:
+  object: action
+  format: PE/ELF/Mach-O
+mitre_attack: []
+trigger_logic:
+  positive:
+  - ui_event: viewedoverlay_opened
+  negative: []
+thresholds: {}
+confidence_rules:
+  - rule: event_observed
+    weight: 1.0
+evidence_binding:
+  captures:
+  - telemetry: [ui_events, audit_logs, sandbox_logs]
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

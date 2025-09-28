@@ -1,0 +1,33 @@
+id: B0009
+name: ComputedHashes
+signature: 'ComputedHashes(f: File) -> Bool'
+category: Behavior/ReputationProvenance
+description: SHA‑256/MD5 calculated.
+scope:
+  object: action
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - action: compute_hashes
+  negative: []
+thresholds: {}
+confidence_rules:
+  - rule: event_observed
+    weight: 1.0
+evidence_binding:
+  captures:
+  - telemetry: [ui_events, audit_logs, sandbox_logs]
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C045  # 'User Execution: Malicious File (T1204.002)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,46 @@
+id: P0246
+name: nslookup
+signature: 'nslookup(f: File) -> Bool'
+category: Office/VBA
+description: DNS exfil patterns. **Set** if `nslookup` calls or COM DNS objects used.
+scope:
+  object: file
+  format: OOXML/OLE
+mitre_attack: [T1204.002]
+trigger_logic:
+  positive:
+  - keywords:
+    - exfil
+    - patterns.
+    - nslookup
+    - calls
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - ref: C002  # 'Office VBA + AMSI: Parting the veil on malicious macros'
+  - ref: C003  # 'XLM + AMSI: New runtime defense against Excel 4.0 macro malware'
+  - ref: C004  # 'Template Injection (T1221)'
+  - ref: C005  # 'Analysis Report on Follina (CVE-2022-30190) Vulnerability'
+  - ref: C006  # 'Analysis of CVE-2017-11882 Exploit in the Wild'
+  - ref: C007  # 'Weaponize Your Word – Malicious Template Injection'
+  - ref: C008  # 'Living off the land: Remote Template Injection mechanics'
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  - ref: C010  # 'Oblivion: large-scale analysis of macro-based Office files'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

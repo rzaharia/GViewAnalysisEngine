@@ -1,0 +1,44 @@
+id: P0003
+name: IsArchive
+signature: 'IsArchive(f: File) -> Bool'
+category: Static/TypeContainer
+description: Archive container. **Set** if ZIP/RAR/7z/TAR signatures.
+scope:
+  object: file
+  format: ZIP/RAR/7z/TAR
+mitre_attack: []
+trigger_logic:
+  positive:
+  - magic:
+    - 504B0304
+    - 52617221
+    - 377ABCAF271C
+    - 7573746172
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: header_or_magic_present
+    weight: 0.4
+  - rule: container_parts_present
+    weight: 0.4
+  - rule: mime_or_extension
+    weight: 0.2
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: StaticParsing
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  - ref: C011  # 'How Threat Actors Are Adapting to a Post-Macro World'
+  - ref: C012  # 'Are threat actors turning to archives and disk images as macro usage dwindles?'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

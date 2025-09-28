@@ -1,0 +1,37 @@
+id: P0205
+name: AttachmentHasMOTW
+signature: 'AttachmentHasMOTW(f: File) -> Bool'
+category: EmailSpecific
+description: Attachment downloaded from Internet. **Set** if MOTW present.
+scope:
+  object: file
+  format: EML/MSG
+mitre_attack: [T1204.002, T1566]
+trigger_logic:
+  positive:
+  - keywords:
+    - Attachment
+    - downloaded
+    - from
+    - Internet.
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C027  # 'User Execution: Malicious File (T1204.002)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

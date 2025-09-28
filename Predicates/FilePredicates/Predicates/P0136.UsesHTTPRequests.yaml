@@ -1,0 +1,35 @@
+id: P0136
+name: UsesHTTPRequests
+signature: 'UsesHTTPRequests(f: File) -> Bool'
+category: Runtime/Network
+description: **Set** if protocol parsing identifies HTTP(S).
+scope:
+  object: file
+  format: generic
+mitre_attack: [T1197, T1204.002]
+trigger_logic:
+  positive:
+  - protocol_detected:
+    - HTTP
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: DynamicMonitoring
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C025  # 'BITS Jobs (T1197)'
+  - ref: C027  # 'User Execution: Malicious File (T1204.002)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

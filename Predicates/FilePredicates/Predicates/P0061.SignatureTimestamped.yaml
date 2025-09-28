@@ -1,0 +1,40 @@
+id: P0061
+name: SignatureTimestamped
+signature: 'SignatureTimestamped(f: File) -> Bool'
+category: Static/TrustAndReputation
+description: Countersignature present. **Set** if RFC3161 timestamp or Authenticode TS.
+scope:
+  object: file
+  format: generic
+mitre_attack: [T1553.002]
+trigger_logic:
+  positive:
+  - keywords:
+    - Countersignature
+    - present.
+    - RFC3161
+    - timestamp
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: StaticParsing
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C016  # 'Certified Malware: Measuring Breaches of Trust in the Windows Code-Signing PKI'
+  - ref: C017  # 'Subvert Trust Controls: Code Signing (T1553.002)'
+  - ref: C018  # 'Microsoft Trusted Signing service abused to code-sign malware'
+  - ref: C019  # 'Can You Trust a File’s Digital Signature? Zloader campaign abuses signature verification'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

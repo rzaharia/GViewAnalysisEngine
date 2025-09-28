@@ -1,0 +1,51 @@
+id: P0034
+name: IsWord
+signature: 'IsWord(f: File) -> Bool'
+category: Static/TypeContainer
+description: MS Word document family. **Set** if magic/MIME/extension indicates Word (.doc/.docx/.docm/.rtf).
+scope:
+  object: file
+  format: OOXML/OLE/RTF
+mitre_attack: []
+trigger_logic:
+  positive:
+  - magic:
+    - D0CF11E0A1B11AE1
+  - zip_parts_present:
+    - [Content_Types].xml
+    - word/document.xml
+  - mime:
+    - application/msword
+    - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  negative:
+  - not_present:
+    - xl/workbook.xml
+    - ppt/presentation.xml
+thresholds: {}
+confidence_rules:
+  - rule: header_or_magic_present
+    weight: 0.4
+  - rule: container_parts_present
+    weight: 0.4
+  - rule: mime_or_extension
+    weight: 0.2
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: StaticParsing
+  failure_modes: []
+false_positives:
+  - MIME-only matches without container corroboration
+false_negatives:
+  - Corrupted OOXML/ZIP preventing part enumeration
+  - Polyglot ZIP/JAR tricks
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

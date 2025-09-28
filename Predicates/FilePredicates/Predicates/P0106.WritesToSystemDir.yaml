@@ -1,0 +1,38 @@
+id: P0106
+name: WritesToSystemDir
+signature: 'WritesToSystemDir(f: File) -> Bool'
+category: Runtime/FileSystem
+description: Writes to `System32`, `/bin`, etc. **Set** by path and ACL.
+scope:
+  object: file
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - Writes
+    - System32
+    - etc.
+    - path
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: DynamicMonitoring
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C015  # 'Boot or Logon Autostart Execution: Shortcut Modification (T1547.009)'
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

@@ -1,0 +1,39 @@
+id: P0081
+name: VBA
+signature: 'VBA(f: File) -> Bool'
+category: Static/ContentIndicators
+description: VBA project embedded. **Set** if OLE `VBA` streams exist.
+scope:
+  object: file
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - project
+    - embedded.
+    - streams
+    - exist.
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: StaticParsing
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  - ref: C028  # 'Obfuscated Files or Information (T1027)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,42 @@
+id: P0270
+name: ArchiveContainsExecutable
+signature: 'ArchiveContainsExecutable(f: File) -> Bool'
+category: ArchiveInstallerAbuse
+description: **Set** after enumerating members.
+scope:
+  object: file
+  format: ZIP/RAR/7z/MSI
+mitre_attack: [T1027, T1204.002]
+trigger_logic:
+  positive:
+  - embedded_types:
+    - PE
+    - ELF
+    - Mach-O
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: member_filetype_detection
+    weight: 0.8
+  - rule: extension_analysis
+    weight: 0.2
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C011  # 'How Threat Actors Are Adapting to a Post-Macro World'
+  - ref: C012  # 'Are threat actors turning to archives and disk images as macro usage dwindles?'
+  - ref: C013  # 'Identification and Disruption of QakBot Infrastructure (AA23-242A)'
+  - ref: C014  # 'Obfuscated Files or Information: LNK Icon Smuggling (T1027.012)'
+  - ref: C015  # 'Boot or Logon Autostart Execution: Shortcut Modification (T1547.009)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

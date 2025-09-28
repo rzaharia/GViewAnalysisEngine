@@ -1,0 +1,41 @@
+id: P0008
+name: IsDocm
+signature: 'IsDocm(f: File) -> Bool'
+category: Static/TypeContainer
+description: Macro-enabled Word (.docm). **Set** if OOXML + `vbaProject.bin`.
+scope:
+  object: file
+  format: OOXML/OLE/RTF
+mitre_attack: []
+trigger_logic:
+  positive:
+  - zip_parts_present:
+    - [Content_Types].xml
+    - word/document.xml
+    - word/vbaProject.bin
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: header_or_magic_present
+    weight: 0.4
+  - rule: container_parts_present
+    weight: 0.4
+  - rule: mime_or_extension
+    weight: 0.2
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: StaticParsing
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

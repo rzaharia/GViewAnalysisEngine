@@ -1,0 +1,37 @@
+id: P0172
+name: UsesPsExecLike
+signature: 'UsesPsExecLike(f: File) -> Bool'
+category: Runtime/DiscoveryLateral
+description: PsExec/Smbexec patterns. **Set** if `PSEXESVC`/`svcctl` RPC used.
+scope:
+  object: file
+  format: generic
+mitre_attack: [T1570]
+trigger_logic:
+  positive:
+  - keywords:
+    - PsExec
+    - Smbexec
+    - patterns.
+    - PSEXESVC
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: DynamicMonitoring
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C024  # 'Process Injection (T1055)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

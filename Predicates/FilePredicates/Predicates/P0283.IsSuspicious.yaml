@@ -1,0 +1,37 @@
+id: P0283
+name: IsSuspicious
+signature: 'IsSuspicious(f: File) -> Bool'
+category: ClassificationHelpers
+description: Generic suspicion. **Set** by rule combinations (example rules below).
+scope:
+  object: file
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - Generic
+    - suspicion.
+    - rule
+    - combinations
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

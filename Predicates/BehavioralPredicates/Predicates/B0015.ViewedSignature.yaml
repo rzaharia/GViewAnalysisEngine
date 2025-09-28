@@ -1,0 +1,34 @@
+id: B0015
+name: ViewedSignature
+signature: 'ViewedSignature(f: File) -> Bool'
+category: Behavior/ReputationProvenance
+description: Digital signature pane opened.
+scope:
+  object: action
+  format: generic
+mitre_attack: [T1553.002]
+trigger_logic:
+  positive:
+  - ui_event: viewedsignature_opened
+  negative: []
+thresholds: {}
+confidence_rules:
+  - rule: event_observed
+    weight: 1.0
+evidence_binding:
+  captures:
+  - telemetry: [ui_events, audit_logs, sandbox_logs]
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C017  # 'Subvert Trust Controls: Code Signing (T1553.002)'
+  - ref: C045  # 'User Execution: Malicious File (T1204.002)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

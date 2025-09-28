@@ -1,0 +1,34 @@
+id: P0016
+name: IsInstaller
+signature: 'IsInstaller(f: File) -> Bool'
+category: Static/TypeContainer
+description: Installer package. **Set** if MSI/WIX/InstallShield cues.
+scope:
+  object: file
+  format: MSI/InstallShield
+mitre_attack: []
+trigger_logic:
+  positive:
+  - msi_structures_present: True
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: StaticParsing
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

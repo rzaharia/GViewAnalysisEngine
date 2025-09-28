@@ -1,0 +1,33 @@
+id: B0099
+name: PersistenceReviewed
+signature: 'PersistenceReviewed(f: File) -> Bool'
+category: Behavior/CoverageGates
+description: `ViewedRunKeys ∨ ViewedScheduledTasks ∨ ViewedServices ∨ ViewedWmiSubscriptions`.
+scope:
+  object: action
+  format: PDF/RTF/OLE
+mitre_attack: []
+trigger_logic:
+  positive:
+  - telemetry: ui/audit
+  negative: []
+thresholds: {}
+confidence_rules:
+  - rule: event_observed
+    weight: 1.0
+evidence_binding:
+  captures:
+  - telemetry: [ui_events, audit_logs, sandbox_logs]
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

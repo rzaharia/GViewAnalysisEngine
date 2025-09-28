@@ -1,0 +1,35 @@
+id: P0276
+name: CapturesClipboard
+signature: 'CapturesClipboard(f: File) -> Bool'
+category: CredentialAccountAbuse
+description: Clipboard monitoring. **Set** by APIs.
+scope:
+  object: file
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - Clipboard
+    - monitoring.
+    - APIs.
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

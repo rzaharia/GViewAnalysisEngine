@@ -1,0 +1,37 @@
+id: P0162
+name: LoadsKernelDriver
+signature: 'LoadsKernelDriver(f: File) -> Bool'
+category: Runtime/PrivilegeBoundary
+description: Kernel-level activity. **Set** if service type = kernel driver or module load at ring 0.
+scope:
+  object: file
+  format: generic
+mitre_attack: [T1543.003]
+trigger_logic:
+  positive:
+  - keywords:
+    - Kernel-level
+    - activity.
+    - service
+    - type
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: DynamicMonitoring
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C024  # 'Process Injection (T1055)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

@@ -1,0 +1,37 @@
+id: P0188
+name: UsesParentPidSpoofing
+signature: 'UsesParentPidSpoofing(f: File) -> Bool'
+category: Hybrid/AntiAnalysisEvasion
+description: Hollow/spoofed parent. **Set** if PPID inconsistent with UI chain.
+scope:
+  object: file
+  format: generic
+mitre_attack: [T1134, T1562]
+trigger_logic:
+  positive:
+  - keywords:
+    - Hollow
+    - spoofed
+    - parent.
+    - PPID
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C022  # 'Ten process injection techniques: survey of common and trending techniques'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

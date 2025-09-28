@@ -1,0 +1,32 @@
+id: B0002
+name: Closed
+signature: 'Closed(f: File) -> Bool'
+category: Behavior/SessionNavigation
+description: File tab closed.
+scope:
+  object: action
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - telemetry: ui/audit
+  negative: []
+thresholds: {}
+confidence_rules:
+  - rule: event_observed
+    weight: 1.0
+evidence_binding:
+  captures:
+  - telemetry: [ui_events, audit_logs, sandbox_logs]
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

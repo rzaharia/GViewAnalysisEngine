@@ -1,0 +1,33 @@
+id: B0076
+name: ViewedShadowCopyEvents
+signature: 'ViewedShadowCopyEvents(f: File) -> Bool'
+category: Behavior/RansomwareExfil
+description: VSS deletions inspected.
+scope:
+  object: action
+  format: generic
+mitre_attack: [T1490]
+trigger_logic:
+  positive:
+  - ui_event: viewedshadowcopyevents_opened
+  negative: []
+thresholds: {}
+confidence_rules:
+  - rule: event_observed
+    weight: 1.0
+evidence_binding:
+  captures:
+  - telemetry: [ui_events, audit_logs, sandbox_logs]
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C030  # 'Inhibit System Recovery (T1490)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

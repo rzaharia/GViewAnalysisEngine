@@ -1,0 +1,36 @@
+id: P0203
+name: ModifiesSudoers
+signature: 'ModifiesSudoers(f: File) -> Bool'
+category: PlatformSpecific
+description: Linux sudoers edited. **Set** if `/etc/sudoers` or drop-in changed.
+scope:
+  object: file
+  format: macOS/Linux system
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - Linux
+    - sudoers
+    - edited.
+    - sudoers
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

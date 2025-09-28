@@ -1,0 +1,40 @@
+id: P0048
+name: HasHighEntropy
+signature: 'HasHighEntropy(f: File) -> Bool'
+category: Static/PackagingObfuscation
+description: Likely packed/obfuscated. **Set** if average entropy above threshold (e.g., >7.2) on code/streams.
+scope:
+  object: file
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - Likely
+    - packed
+    - obfuscated.
+    - average
+  negative:
+thresholds:
+  entropy_gt: 7.2
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: StaticParsing
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C028  # 'Obfuscated Files or Information (T1027)'
+  - ref: C020  # 'A PE header-based method for malware detection using clustering and deep embedding techniques'
+  - ref: C021  # 'Managing PE Files With Overlays'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,41 @@
+id: P0129
+name: DownloadsFromInternet
+signature: 'DownloadsFromInternet(f: File) -> Bool'
+category: Runtime/Network
+description: Receives file payload. **Set** if HTTP GET/POST or other protocol transfers result in a saved file.
+scope:
+  object: file
+  format: generic
+mitre_attack: [T1105, T1197, T1204.002]
+trigger_logic:
+  positive:
+  - http_method_in:
+    - GET
+    - POST
+  - resulting_file_write: True
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: file_write_after_http
+    weight: 0.7
+  - rule: content_type_executable_or_script
+    weight: 0.3
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: DynamicMonitoring
+  failure_modes: []
+false_positives:
+  - Auto-updaters downloading benign payloads
+false_negatives:
+  - Covert channels (DNS/ICMP) not attributed to file
+provenance:
+  citations:
+  - ref: C025  # 'BITS Jobs (T1197)'
+  - ref: C027  # 'User Execution: Malicious File (T1204.002)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

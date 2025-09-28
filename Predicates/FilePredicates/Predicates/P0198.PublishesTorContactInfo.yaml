@@ -1,0 +1,37 @@
+id: P0198
+name: PublishesTorContactInfo
+signature: 'PublishesTorContactInfo(f: File) -> Bool'
+category: Runtime/Ransomware
+description: Ransom note with onion addresses. **Set** by content scan.
+scope:
+  object: file
+  format: generic
+mitre_attack: []
+trigger_logic:
+  positive:
+  - keywords:
+    - Ransom
+    - note
+    - with
+    - onion
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: DynamicMonitoring
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C013  # 'Identification and Disruption of QakBot Infrastructure (AA23-242A)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

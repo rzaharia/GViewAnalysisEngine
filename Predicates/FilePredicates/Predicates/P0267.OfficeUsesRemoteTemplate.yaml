@@ -1,0 +1,39 @@
+id: P0267
+name: OfficeUsesRemoteTemplate
+signature: 'OfficeUsesRemoteTemplate(f: File) -> Bool'
+category: Office/ExcelPowerPoint
+description: External template (generic). **Set** if RELS point outward.
+scope:
+  object: file
+  format: OOXML
+mitre_attack: [T1221]
+trigger_logic:
+  positive:
+  - keywords:
+    - External
+    - template
+    - generic
+    - RELS
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: Hybrid
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - ref: C003  # 'XLM + AMSI: New runtime defense against Excel 4.0 macro malware'
+  - ref: C004  # 'Template Injection (T1221)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

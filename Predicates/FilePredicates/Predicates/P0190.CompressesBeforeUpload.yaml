@@ -1,0 +1,37 @@
+id: P0190
+name: CompressesBeforeUpload
+signature: 'CompressesBeforeUpload(f: File) -> Bool'
+category: Runtime/DataCollectionExfil
+description: ZIP/7z creation prior to send. **Set** if archive created then network upload.
+scope:
+  object: file
+  format: generic
+mitre_attack: [T1560.001]
+trigger_logic:
+  positive:
+  - keywords:
+    - creation
+    - prior
+    - send.
+    - archive
+  negative:
+thresholds: {}
+confidence_rules:
+  - rule: primary_evidence
+    weight: 1.0
+evidence_binding:
+  captures:
+  - bytespan: O(0..512)
+extraction:
+  method: DynamicMonitoring
+  failure_modes: []
+false_positives: []
+false_negatives: []
+provenance:
+  citations:
+  - ref: C027  # 'User Execution: Malicious File (T1204.002)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1
