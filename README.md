@@ -30,8 +30,8 @@ It provides a **catalog of predicates** (file-based and behavioral) and a librar
     - **Predicates/** - YAML PredicateCards + `0.predicate_index.csv` 
     - **README.md** - Notes on behavioral facts 
   - **InferenceRules/** 
-    - - **Rules/** - Inferece rules that produce flag results
-    - - **Suggestions/** - Inferece rules that offer suggestions to the user
+    - **Rules/** - Inferece rules that produce flag results
+    - **Suggestions/** - Inferece rules that offer suggestions to the user
   - **README.md** - Notes of Predicates
 
 ## Documentation inside each folder
