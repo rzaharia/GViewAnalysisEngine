@@ -1,0 +1,226 @@
+citations:
+- id: C001
+  title: 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  venue: Computers & Security
+  year: 2021
+  url: https://www.sciencedirect.com/science/article/pii/S0167404821004053
+- id: C002
+  title: 'Office VBA + AMSI: Parting the veil on malicious macros'
+  venue: Microsoft Security Blog
+  year: 2018
+  url: https://www.microsoft.com/en-us/security/blog/2018/09/12/office-vba-amsi-parting-the-veil-on-malicious-macros/
+- id: C003
+  title: 'XLM + AMSI: New runtime defense against Excel 4.0 macro malware'
+  venue: Microsoft Security Blog
+  year: 2021
+  url: https://www.microsoft.com/en-us/security/blog/2021/03/03/xlm-amsi-new-runtime-defense-against-excel-4-0-macro-malware/
+- id: C004
+  title: Template Injection (T1221)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1221/
+- id: C005
+  title: Analysis Report on Follina (CVE-2022-30190) Vulnerability
+  venue: AhnLab
+  year: 2022
+  url: https://www.ahnlab.com/en/contents/content-center/pdf/35277
+- id: C006
+  title: Analysis of CVE-2017-11882 Exploit in the Wild
+  venue: Unit 42 (Palo Alto Networks)
+  year: 2017
+  url: https://unit42.paloaltonetworks.com/unit42-analysis-of-cve-2017-11882-exploit-in-the-wild/
+- id: C007
+  title: Weaponize Your Word – Malicious Template Injection
+  venue: JUMPSEC Labs
+  year: 2024
+  url: https://labs.jumpsec.com/weaponize-your-word-malicious-template-injection/
+- id: C008
+  title: 'Living off the land: Remote Template Injection mechanics'
+  venue: CYFIRMA Research
+  year: 2025
+  url: https://www.cyfirma.com/research/living-off-the-land-the-mechanics-of-remote-template-injection-attack/
+- id: C009
+  title: Cheat Sheet for Analyzing Malicious Documents
+  venue: SANS Institute
+  year: 2021
+  url: https://www.sans.org/posters/cheat-sheet-for-analyzing-malicious-documents
+- id: C010
+  title: 'Oblivion: large-scale analysis of macro-based Office files'
+  venue: International Journal of Information Security (Springer)
+  year: 2024
+  url: https://link.springer.com/article/10.1007/s11416-024-00531-3
+- id: C011
+  title: How Threat Actors Are Adapting to a Post-Macro World
+  venue: Proofpoint Threat Insight
+  year: 2022
+  url: https://www.proofpoint.com/au/blog/threat-insight/how-threat-actors-are-adapting-post-macro-world
+- id: C012
+  title: Are threat actors turning to archives and disk images as macro usage dwindles?
+  venue: Sophos News
+  year: 2022
+  url: https://news.sophos.com/en-us/2022/10/12/are-threat-actors-turning-to-archives-and-disk-images-as-macro-usage-dwindles/
+- id: C013
+  title: Identification and Disruption of QakBot Infrastructure (AA23-242A)
+  venue: CISA/FBI Advisory
+  year: 2023
+  url: https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-242a
+- id: C014
+  title: 'Obfuscated Files or Information: LNK Icon Smuggling (T1027.012)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1027/012/
+- id: C015
+  title: 'Boot or Logon Autostart Execution: Shortcut Modification (T1547.009)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1547/009/
+- id: C016
+  title: 'Certified Malware: Measuring Breaches of Trust in the Windows Code-Signing PKI'
+  venue: ACM CCS
+  year: 2017
+  url: https://umiacs.umd.edu/~tdumitra/papers/CCS-2017.pdf
+- id: C017
+  title: 'Subvert Trust Controls: Code Signing (T1553.002)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1553/002/
+- id: C018
+  title: Microsoft Trusted Signing service abused to code-sign malware
+  venue: BleepingComputer
+  year: 2025
+  url: https://www.bleepingcomputer.com/news/security/microsoft-trusted-signing-service-abused-to-code-sign-malware/
+- id: C019
+  title: Can You Trust a File’s Digital Signature? Zloader campaign abuses signature verification
+  venue: Check Point Research
+  year: 2022
+  url: https://research.checkpoint.com/2022/can-you-trust-a-files-digital-signature-new-zloader-campaign-exploits-microsofts-signature-verification-putting-users-at-risk/
+- id: C020
+  title: A PE header-based method for malware detection using clustering and deep embedding techniques
+  venue: Journal of Information Security and Applications
+  year: 2021
+  url: https://www.sciencedirect.com/science/article/abs/pii/S2214212621001046
+- id: C021
+  title: Managing PE Files With Overlays
+  venue: SANS Internet Storm Center
+  year: 2024
+  url: https://isc.sans.edu/diary/31268
+- id: C022
+  title: 'Ten process injection techniques: survey of common and trending techniques'
+  venue: Elastic Security Blog
+  year: 2017
+  url: https://www.elastic.co/blog/ten-process-injection-techniques-technical-survey-common-and-trending-process
+- id: C023
+  title: 'Windows Process Injection in 2019: Gotta Catch Them All'
+  venue: Black Hat USA (whitepaper)
+  year: 2019
+  url: https://i.blackhat.com/USA-19/Thursday/us-19-Kotler-Process-Injection-Techniques-Gotta-Catch-Them-All-wp.pdf
+- id: C024
+  title: Process Injection (T1055)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1055/
+- id: C025
+  title: BITS Jobs (T1197)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1197/
+- title: BITSAdmin (S0190)
+  venue: MITRE ATT&CK Software
+  year: 2018
+  url: https://attack.mitre.org/software/S0190/
+  id: C026
+- title: Obfuscated Files or Information (T1027)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1027/
+  id: C027
+- title: Spearphishing Attachment (T1566.001)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1566/001/
+  id: C028
+- title: Spearphishing Link (T1566.002)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1566/002/
+  id: C029
+- title: Inhibit System Recovery (T1490)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1490/
+  id: C030
+- title: Data Encrypted for Impact (T1486)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1486/
+  id: C031
+- title: Exfiltration Over C2 Channel (T1041)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1041/
+  id: C032
+- title: Clipboard Data (T1115)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1115/
+  id: C033
+- title: 'Scheduled Task/Job: Scheduled Task (T1053.005)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1053/005/
+  id: C034
+- title: 'Event Triggered Execution: WMI Event Subscription (T1546.003)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1546/003/
+  id: C035
+- title: Application Layer Protocol (T1071)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1071/
+  id: C036
+- title: 'Application Layer Protocol: DNS (T1071.004)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1071/004/
+  id: C037
+- title: Ingress Tool Transfer (T1105)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1105/
+  id: C038
+- title: Subvert Trust Controls (T1553)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1553/
+  id: C039
+- title: Data from Local System (T1005)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1005/
+  id: C040
+- title: Screen Capture (T1113)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1113/
+  id: C041
+- title: 'Input Capture: Keylogging (T1056.001)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1056/001/
+  id: C042
+- title: 'Archive Collected Data: Archive via Utility (T1560.001)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1560/001/
+  id: C043
+- title: 'Obfuscated/Compressed Files and Information: Steganography (T1027.003)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1027/003/
+  id: C044
+- id: C045
+  title: 'User Execution: Malicious File (T1204.002)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1204/002/
