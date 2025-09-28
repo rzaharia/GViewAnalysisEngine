@@ -1,4 +1,4 @@
-# # GView Analysis Engine - File predicates
+# GView Analysis Engine - File predicates
 
 Here is the entire list of the predicates in a readable way.
 
