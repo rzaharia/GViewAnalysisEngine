@@ -1,0 +1,31 @@
+id: F0083
+code: P-303
+name: ViewpersistenceIfCreatesrunkeyAndPersistencereviewed
+signature: 'CreatesRunKey(f) ∧ ¬PersistenceReviewed(f) ∧ Within(10m) → Suggest(ViewPersistence(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: New persistence. Review startup artifacts.
+trigger_logic:
+  antecedent:
+  - CreatesRunKey(f)=true
+  - ¬PersistenceReviewed(f)=true
+  - Within(10m)=true
+  consequent:
+  - Suggest(ViewPersistence(f))
+action:
+  suggest: ViewPersistence(f)
+message: 'New persistence. Review startup artifacts.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

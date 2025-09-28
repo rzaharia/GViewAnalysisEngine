@@ -1,0 +1,30 @@
+id: F0077
+code: M-292
+name: ExtractiocsIfIssuspiciousAndExtractediocs
+signature: 'IsSuspicious(f) ∧ ¬ExtractedIOCs(f) → Suggest(ExtractIOCs(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Extract IOCs to pivot and contain?
+trigger_logic:
+  antecedent:
+  - IsSuspicious(f)=true
+  - ¬ExtractedIOCs(f)=true
+  consequent:
+  - Suggest(ExtractIOCs(f))
+action:
+  suggest: ExtractIOCs(f)
+message: 'Extract IOCs to pivot and contain?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '45m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

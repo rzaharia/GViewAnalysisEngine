@@ -1,0 +1,32 @@
+id: F0021
+code: F-043
+name: ViewlnktargetIfIslnkAndIsshortcutabusecandidate
+signature: 'IsLnk(f) ∧ IsShortcutAbuseCandidate(f) → Suggest(ViewLnkTarget(f))'
+category: Suggestion/Lnk
+scope:
+  object: file
+  format: LNK
+description: LNK launches external content. Review target & args?
+trigger_logic:
+  antecedent:
+  - IsLnk(f)=true
+  - IsShortcutAbuseCandidate(f)=true
+  consequent:
+  - Suggest(ViewLnkTarget(f))
+action:
+  suggest: ViewLnkTarget(f)
+message: 'LNK launches external content. Review target & args?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags:
+  - lnk
+severity:
+  level: high
+provenance:
+  citations:
+  - id: C014  # 'Obfuscated Files or Information: LNK Icon Smuggling (T1027.012)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

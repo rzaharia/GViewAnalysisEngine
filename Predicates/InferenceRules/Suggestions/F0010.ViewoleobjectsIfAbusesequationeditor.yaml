@@ -1,0 +1,32 @@
+id: F0010
+code: F-013
+name: ViewoleobjectsIfAbusesequationeditor
+signature: 'AbusesEquationEditor(f) → Suggest(ViewOleObjects(f))'
+category: Suggestion/PdfRtfOle
+scope:
+  object: file
+  format: generic
+description: Legacy Equation Editor usage. Inspect OLE objects?
+trigger_logic:
+  antecedent:
+  - AbusesEquationEditor(f)=true
+  consequent:
+  - Suggest(ViewOleObjects(f))
+action:
+  suggest: ViewOleObjects(f)
+message: 'Legacy Equation Editor usage. Inspect OLE objects?'
+explanation: 'Legacy RTF/OLE vectors have been heavily exploited; inspecting OLE/controls helps surface exploit chains.'
+cooldown: '30m'
+tags:
+  - office
+  - ole
+severity:
+  level: high
+provenance:
+  citations:
+  - id: C006  # 'Analysis of CVE-2017-11882 Exploit in the Wild'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

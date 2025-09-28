@@ -1,0 +1,30 @@
+id: F0046
+code: M-211
+name: DecodehexIfContainshexblobsAndDecodedhexblobs
+signature: 'ContainsHexBlobs(f) ∧ ¬DecodedHexBlobs(f) → Suggest(DecodeHex(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Hex blobs present. Decode now?
+trigger_logic:
+  antecedent:
+  - ContainsHexBlobs(f)=true
+  - ¬DecodedHexBlobs(f)=true
+  consequent:
+  - Suggest(DecodeHex(f))
+action:
+  suggest: DecodeHex(f)
+message: 'Hex blobs present. Decode now?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

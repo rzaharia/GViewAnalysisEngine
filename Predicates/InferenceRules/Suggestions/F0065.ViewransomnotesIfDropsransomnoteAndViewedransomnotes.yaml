@@ -1,0 +1,30 @@
+id: F0065
+code: M-252
+name: ViewransomnotesIfDropsransomnoteAndViewedransomnotes
+signature: 'DropsRansomNote(f) ∧ ¬ViewedRansomNotes(f) → Suggest(ViewRansomNotes(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Ransom note artifacts dropped. Open list?
+trigger_logic:
+  antecedent:
+  - DropsRansomNote(f)=true
+  - ¬ViewedRansomNotes(f)=true
+  consequent:
+  - Suggest(ViewRansomNotes(f))
+action:
+  suggest: ViewRansomNotes(f)
+message: 'Ransom note artifacts dropped. Open list?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

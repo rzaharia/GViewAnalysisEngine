@@ -1,0 +1,31 @@
+id: F0013
+code: F-022
+name: ViewscriptsourceIfIshtaAndContainsurl
+signature: 'IsHTA(f) ∧ ContainsUrl(f) → Suggest(ViewScriptSource(f))'
+category: Suggestion/Scripts
+scope:
+  object: file
+  format: Script
+description: HTA with URLs. Open source view?
+trigger_logic:
+  antecedent:
+  - IsHTA(f)=true
+  - ContainsUrl(f)=true
+  consequent:
+  - Suggest(ViewScriptSource(f))
+action:
+  suggest: ViewScriptSource(f)
+message: 'HTA with URLs. Open source view?'
+explanation: 'Deobfuscation and dynamic invocation tracing expose hidden URLs, loaders, and privilege escalation steps.'
+cooldown: '30m'
+tags:
+  - hta
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,31 @@
+id: F0053
+code: M-223
+name: ViewoverlayIfIspeAndViewedoverlay
+signature: 'IsPe(f) ∧ ¬ViewedOverlay(f) ∧ HasOverlayData(f) → Suggest(ViewOverlay(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Overlay data present. Inspect trailing bytes?
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - ¬ViewedOverlay(f)=true
+  - HasOverlayData(f)=true
+  consequent:
+  - Suggest(ViewOverlay(f))
+action:
+  suggest: ViewOverlay(f)
+message: 'Overlay data present. Inspect trailing bytes?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '45m'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

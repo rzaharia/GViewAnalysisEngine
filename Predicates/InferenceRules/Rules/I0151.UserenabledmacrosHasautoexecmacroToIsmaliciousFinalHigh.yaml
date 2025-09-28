@@ -1,0 +1,50 @@
+id: I0151
+name: UserenabledmacrosHasautoexecmacroToIsmaliciousFinalHigh
+signature: UserEnabledMacros(u,f) ∧ HasAutoExecMacro(f) ∧ DownloadsFromInternet(f)
+  ∧ Within(5m) → IsMalicious(f) {Final, high}
+category: Behavioral/TimeWindowed
+scope:
+  object: file
+  postconditions:
+  - Flag: IsMalicious(f) {Final, high}
+description: When UserEnabledMacros(u,f) ∧ HasAutoExecMacro(f) ∧ DownloadsFromInternet(f)
+  ∧ Within(5m) holds, assert IsMalicious(f) {Final, high}.
+trigger_logic:
+  antecedent:
+  - UserEnabledMacros(u,f)=true
+  - HasAutoExecMacro(f)=true
+  - DownloadsFromInternet(f)=true
+  - Within(5m)=true
+  consequent:
+  - IsMalicious(f) {Final, high}=true
+evidence_binding:
+  requires:
+  - artifact: timeline
+    fields:
+    - delta
+    - sequence
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Endpoint not in allowlist and SNI mismatch: +0.05'
+  - 'if ParentProcess is Office: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C038
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

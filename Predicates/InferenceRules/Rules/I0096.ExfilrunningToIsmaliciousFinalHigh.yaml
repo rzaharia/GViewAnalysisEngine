@@ -1,0 +1,58 @@
+id: I0096
+name: ExfilrunningToIsmaliciousFinalHigh
+signature: ExfilRunning(f) ∧ (BeaconingPattern(f) ∨ UsesCloudStorageApi(f)) → IsMalicious(f)
+  {Final, high}
+category: Behavioral/Exfiltration
+scope:
+  object: file
+  postconditions:
+  - Flag: IsMalicious(f) {Final, high}
+description: When ExfilRunning(f) ∧ (BeaconingPattern(f) ∨ UsesCloudStorageApi(f))
+  holds, assert IsMalicious(f) {Final, high}.
+trigger_logic:
+  antecedent:
+  - ExfilRunning(f)=true
+  - (BeaconingPattern(f) ∨ UsesCloudStorageApi(f))=true
+  consequent:
+  - IsMalicious(f) {Final, high}=true
+evidence_binding:
+  requires:
+  - artifact: netflow
+    fields:
+    - dst_domain
+    - url
+    - bytes_out
+  - artifact: cloud_api
+    fields:
+    - provider
+    - endpoint
+    - object_count
+  - artifact: timeline
+    fields:
+    - doc_reads
+    - archive_ops
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Periodicity jitter < 10%: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C048
+  - id: C036
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

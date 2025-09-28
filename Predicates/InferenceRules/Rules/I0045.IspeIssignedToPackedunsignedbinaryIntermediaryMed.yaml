@@ -1,0 +1,63 @@
+id: I0045
+name: IspeIssignedToPackedunsignedbinaryIntermediaryMed
+signature: IsPe(f) ∧ ¬IsSigned(f) ∧ HasHighEntropy(f) → PackedUnsignedBinary(f) {Intermediary,
+  med}
+category: Behavioral/PEBinary
+scope:
+  object: file
+  postconditions:
+  - Derive: PackedUnsignedBinary(f) {Intermediary, med}
+description: When IsPe(f) ∧ ¬IsSigned(f) ∧ HasHighEntropy(f) holds, assert PackedUnsignedBinary(f)
+  {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - ¬IsSigned(f)=true
+  - HasHighEntropy(f)=true
+  consequent:
+  - PackedUnsignedBinary(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: pe_static
+    fields:
+    - imports
+    - sections
+    - entropy
+  - artifact: process_tree
+    fields:
+    - parent
+    - children
+    - injection_calls
+  - artifact: fs_events
+    fields:
+    - writes
+    - drops
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Unsigned(binary): +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Direct syscalls to evade hooks
+  - Signed vulnerable driver (BYOVD)
+  mitigations:
+  - Kernel ETW for syscalls
+  - Blocklist vulnerable drivers
+provenance:
+  citations:
+  - id: C024
+  - id: C038
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

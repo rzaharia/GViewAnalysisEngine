@@ -1,0 +1,46 @@
+id: I0124
+name: ShareddroppersSimilarpersistencekeysToClusteredpersistencecampaignIntermediaryMe
+signature: SharedDroppers(f1,f2) ∧ SimilarPersistenceKeys(f1,f2) → ClusteredPersistenceCampaign(f1,f2)
+  {Intermediary, med}
+category: Behavioral/CampaignCorrelation
+scope:
+  object: file
+  postconditions:
+  - Derive: ClusteredPersistenceCampaign(f1,f2) {Intermediary, med}
+description: When SharedDroppers(f1,f2) ∧ SimilarPersistenceKeys(f1,f2) holds, assert
+  ClusteredPersistenceCampaign(f1,f2) {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - SharedDroppers(f1,f2)=true
+  - SimilarPersistenceKeys(f1,f2)=true
+  consequent:
+  - ClusteredPersistenceCampaign(f1,f2) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: cluster
+    fields:
+    - c2_family
+    - overlap_indicators
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations: []
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: high
+version: 1

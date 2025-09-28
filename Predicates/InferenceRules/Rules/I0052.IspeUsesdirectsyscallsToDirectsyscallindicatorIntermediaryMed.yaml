@@ -1,0 +1,61 @@
+id: I0052
+name: IspeUsesdirectsyscallsToDirectsyscallindicatorIntermediaryMed
+signature: IsPe(f) ∧ UsesDirectSyscalls(f) → DirectSyscallIndicator(f) {Intermediary,
+  med}
+category: Behavioral/PEBinary
+scope:
+  object: file
+  postconditions:
+  - Derive: DirectSyscallIndicator(f) {Intermediary, med}
+description: When IsPe(f) ∧ UsesDirectSyscalls(f) holds, assert DirectSyscallIndicator(f)
+  {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - UsesDirectSyscalls(f)=true
+  consequent:
+  - DirectSyscallIndicator(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: pe_static
+    fields:
+    - imports
+    - sections
+    - entropy
+  - artifact: process_tree
+    fields:
+    - parent
+    - children
+    - injection_calls
+  - artifact: fs_events
+    fields:
+    - writes
+    - drops
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Direct syscalls to evade hooks
+  - Signed vulnerable driver (BYOVD)
+  mitigations:
+  - Kernel ETW for syscalls
+  - Blocklist vulnerable drivers
+provenance:
+  citations:
+  - id: C024
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

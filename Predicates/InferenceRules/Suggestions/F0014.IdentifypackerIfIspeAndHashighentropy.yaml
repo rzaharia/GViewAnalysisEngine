@@ -1,0 +1,32 @@
+id: F0014
+code: F-030
+name: IdentifypackerIfIspeAndHashighentropy
+signature: 'IsPe(f) ∧ HasHighEntropy(f) → Suggest(IdentifyPacker(f))'
+category: Suggestion/PE
+scope:
+  object: file
+  format: generic
+description: High entropy indicates packing. Identify packer?
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - HasHighEntropy(f)=true
+  consequent:
+  - Suggest(IdentifyPacker(f))
+action:
+  suggest: IdentifyPacker(f)
+message: 'High entropy indicates packing. Identify packer?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags:
+  - pe
+  - packing
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

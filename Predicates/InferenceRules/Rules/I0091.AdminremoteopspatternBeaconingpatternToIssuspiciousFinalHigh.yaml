@@ -1,0 +1,56 @@
+id: I0091
+name: AdminremoteopspatternBeaconingpatternToIssuspiciousFinalHigh
+signature: AdminRemoteOpsPattern(f) ∧ BeaconingPattern(f) → IsSuspicious(f) {Final,
+  high}
+category: Behavioral/LateralMovement
+scope:
+  object: file
+  postconditions:
+  - Flag: IsSuspicious(f) {Final, high}
+description: When AdminRemoteOpsPattern(f) ∧ BeaconingPattern(f) holds, assert IsSuspicious(f)
+  {Final, high}.
+trigger_logic:
+  antecedent:
+  - AdminRemoteOpsPattern(f)=true
+  - BeaconingPattern(f)=true
+  consequent:
+  - IsSuspicious(f) {Final, high}=true
+evidence_binding:
+  requires:
+  - artifact: smb_logs
+    fields:
+    - share
+    - ip
+    - auth_user
+  - artifact: winrm_logs
+    fields:
+    - host
+    - user
+  - artifact: service_control
+    fields:
+    - sc_action
+    - service_name
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Periodicity jitter < 10%: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C036
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

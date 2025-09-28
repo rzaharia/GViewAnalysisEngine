@@ -1,0 +1,64 @@
+id: I0066
+name: CreatesrunkeyCreatesstartupshortcutToStartuppersistenceattemptIntermediaryHigh
+signature: CreatesRunKey(f) ∨ CreatesStartupShortcut(f) ∨ AbusesOfficeStartupFolders(f)
+  → StartupPersistenceAttempt(f) {Intermediary, high}
+category: Behavioral/Persistence
+scope:
+  object: file
+  postconditions:
+  - Derive: StartupPersistenceAttempt(f) {Intermediary, high}
+description: When CreatesRunKey(f) ∨ CreatesStartupShortcut(f) ∨ AbusesOfficeStartupFolders(f)
+  holds, assert StartupPersistenceAttempt(f) {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - CreatesRunKey(f) ∨ CreatesStartupShortcut(f) ∨ AbusesOfficeStartupFolders(f)=true
+  consequent:
+  - StartupPersistenceAttempt(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: registry_events
+    fields:
+    - path
+    - value
+    - op
+  - artifact: scheduled_tasks
+    fields:
+    - name
+    - command
+  - artifact: services
+    fields:
+    - name
+    - image_path
+    - start_type
+  - artifact: wmi_events
+    fields:
+    - filter
+    - consumer
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Masqueraded service names
+  - Hidden WMI consumers
+  mitigations:
+  - Audit new autoruns
+  - WMI event subscription inventory
+provenance:
+  citations:
+  - id: C049
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

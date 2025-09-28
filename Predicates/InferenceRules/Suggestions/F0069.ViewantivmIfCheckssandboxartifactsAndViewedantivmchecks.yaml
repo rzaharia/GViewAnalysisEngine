@@ -1,0 +1,30 @@
+id: F0069
+code: M-270
+name: ViewantivmIfCheckssandboxartifactsAndViewedantivmchecks
+signature: 'ChecksSandboxArtifacts(f) ∧ ¬ViewedAntiVMChecks(f) → Suggest(ViewAntiVM(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Anti‑VM checks observed. Review heuristics?
+trigger_logic:
+  antecedent:
+  - ChecksSandboxArtifacts(f)=true
+  - ¬ViewedAntiVMChecks(f)=true
+  consequent:
+  - Suggest(ViewAntiVM(f))
+action:
+  suggest: ViewAntiVM(f)
+message: 'Anti‑VM checks observed. Review heuristics?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

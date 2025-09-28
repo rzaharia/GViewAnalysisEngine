@@ -1,0 +1,30 @@
+id: F0023
+code: F-051
+name: ViewthreatintelhitsIfHashinthreatintel
+signature: 'HashInThreatIntel(f) → Suggest(ViewThreatIntelHits(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Known bad hash in intel. Review details immediately?
+trigger_logic:
+  antecedent:
+  - HashInThreatIntel(f)=true
+  consequent:
+  - Suggest(ViewThreatIntelHits(f))
+action:
+  suggest: ViewThreatIntelHits(f)
+message: 'Known bad hash in intel. Review details immediately?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '5m'
+tags:
+  - intel
+severity:
+  level: critical
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

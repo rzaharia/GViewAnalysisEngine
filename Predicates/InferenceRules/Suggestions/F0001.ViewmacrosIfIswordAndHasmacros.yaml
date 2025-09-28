@@ -1,0 +1,35 @@
+id: F0001
+code: F-001
+name: ViewmacrosIfIswordAndHasmacros
+signature: 'IsWord(f) ∧ HasMacros(f) → Suggest(ViewMacros(f))'
+category: Suggestion/Office
+scope:
+  object: file
+  format: OOXML/OLE
+description: Macros present. Open the Macro Viewer?
+trigger_logic:
+  antecedent:
+  - IsWord(f)=true
+  - HasMacros(f)=true
+  consequent:
+  - Suggest(ViewMacros(f))
+action:
+  suggest: ViewMacros(f)
+message: 'Macros present. Open the Macro Viewer?'
+explanation: 'Office macros are a common initial execution vector; reviewing macro content improves triage and reveals downloader or persistence code.'
+cooldown: '30m'
+tags:
+  - office
+  - macro
+severity:
+  level: high
+provenance:
+  citations:
+  - id: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - id: C045  # 'User Execution: Malicious File (T1204.002)'
+  - id: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

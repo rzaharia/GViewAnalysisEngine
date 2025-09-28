@@ -1,0 +1,57 @@
+id: I0110
+name: IssignedSignaturevalidToStrongpublishertrustIntermediaryHigh
+signature: IsSigned(f) ∧ SignatureValid(f) ∧ SignedByKnownVendor(f) → StrongPublisherTrust(f)
+  {Intermediary, high}
+category: Behavioral/Reputation
+scope:
+  object: file
+  postconditions:
+  - Derive: StrongPublisherTrust(f) {Intermediary, high}
+description: When IsSigned(f) ∧ SignatureValid(f) ∧ SignedByKnownVendor(f) holds,
+  assert StrongPublisherTrust(f) {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - IsSigned(f)=true
+  - SignatureValid(f)=true
+  - SignedByKnownVendor(f)=true
+  consequent:
+  - StrongPublisherTrust(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: mark_of_web
+    fields:
+    - zone
+    - referrer
+  - artifact: signature
+    fields:
+    - subject
+    - chain_status
+  - artifact: threat_intel
+    fields:
+    - feeds
+    - first_seen
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Unsigned(binary): +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C039
+  - id: C045
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

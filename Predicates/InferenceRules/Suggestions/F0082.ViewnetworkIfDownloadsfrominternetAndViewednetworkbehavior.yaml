@@ -1,0 +1,31 @@
+id: F0082
+code: P-302
+name: ViewnetworkIfDownloadsfrominternetAndViewednetworkbehavior
+signature: 'DownloadsFromInternet(f) ∧ ¬ViewedNetworkBehavior(f) ∧ Within(10m) → Suggest(ViewNetwork(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Recent download observed. Review network flows.
+trigger_logic:
+  antecedent:
+  - DownloadsFromInternet(f)=true
+  - ¬ViewedNetworkBehavior(f)=true
+  - Within(10m)=true
+  consequent:
+  - Suggest(ViewNetwork(f))
+action:
+  suggest: ViewNetwork(f)
+message: 'Recent download observed. Review network flows.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -17,26 +17,26 @@
 - Structured the same as `FilePredicates/`.
 - See the [BehavioralPredicates README](BehavioralPredicates/README.md) for details.
 
-### 4. `Rules/`
-- Encodes **inference logic** for reasoning over both file and behavioral predicates.
-- Uses facts + citations to generate higher-level conclusions.
-
+### 4. `InferenceRules/`
+- Encodes **inference logic** for reasoning using existing predicates and also to obtain new ones.
+- Uses facts + citations to generate higher-level conclusions, explanations and options for the user.
+- See the [InferenceRules README](InferenceRules/README.md) for detailed notes.
 ---
 
 ## Usage
 
-1. Define new predicates in YAML under the relevant folder (`FilePredicates` or `BehavioralPredicates`).
-2. Update `0.predicate_index.csv` for indexing.
-3. Add or update inference rules under `Rules/`.
+1. Define new predicates in YAML under the relevant folder (`FilePredicates`, `BehavioralPredicates` or `InferenceRules`).
+2. Update `0.predicate_index.csv` for indexing (available for the predicates).
+3. Add or update inference rules under `InferenceRules/`.
 4. Ensure sources are listed in `citations.yaml`.
 
 
 ## Loading & Performance
 
-In the **initial implementation**, the engine **loaded each predicate/rule individually** by scanning folders.  
-This caused noticeable overhead due to repeated file accesses.  
+In the **initial implementation**, the engine **loaded each predicate/rule individually** by scanning folders. 
+This caused noticeable overhead due to repeated file accesses. 
 
-> To address this, we added build scripts that **compile all predicates and rules into a single compressed file**.  
+> To address this, we added build scripts that **compile all predicates and rules into a single compressed file**. 
 > This reduces I/O costs and significantly improves **startup time**.
 
 ---
@@ -45,54 +45,54 @@ This caused noticeable overhead due to repeated file accesses.
 
 ## Predicate Schema: Field Explanations
 
-Each predicate is stored as a YAML file (`PXXXX.Name.yaml` or `BXXXX.Name.yaml`) and follows a consistent schema.  
+Each predicate is stored as a YAML file (`PXXXX.Name.yaml` or `BXXXX.Name.yaml`) and follows a consistent schema. 
 
 The following fields may appear in a predicate definition:
 
-- **`id`**: Unique identifier.  
-  - **PXXXX** for file predicates, **BXXXX** for behavioral predicates.  
+- **`id`**: Unique identifier. 
+  - **PXXXX** for file predicates, **BXXXX** for behavioral predicates. 
   - Stable across versions to ensure reproducibility.
 
 - **`name`**: Predicate name (CamelCase). Short, descriptive, and unique.
 
-- **`signature`**: Formal signature showing the entity type and return value.  
+- **`signature`**: Formal signature showing the entity type and return value. 
   Example: `IsChm(f: File) -> Bool` means the predicate applies to a file and evaluates to a Boolean.
 
 - **`category`**: Taxonomic grouping. Indicates where the predicate fits (e.g., `Static/TypeContainer`, `Behavior/SessionNavigation`).
 
 - **`description`**: Single-line explanation of the predicate: what it detects, when it is set to `true`.
 
-- **`scope`**: Object type and format.  
-  - `object`: primary entity (`file`, `action`, `process`, etc.).  
+- **`scope`**: Object type and format. 
+  - `object`: primary entity (`file`, `action`, `process`, etc.). 
   - `format`: expected file/container format (`CHM`, `OOXML`, `PE`, `generic`, etc.).
 
 - **`mitre_attack`**: List of ATT&CK technique IDs relevant to this predicate (e.g., `T1221`, `T1055`). Empty if no direct mapping.
 
-- **`trigger_logic`**: Conditions that activate the predicate.  
-  - `positive`: indicators whose presence sets the fact to true (e.g., magic bytes, strings, headers).  
+- **`trigger_logic`**: Conditions that activate the predicate. 
+  - `positive`: indicators whose presence sets the fact to true (e.g., magic bytes, strings, headers). 
   - `negative`: indicators that exclude the fact.
 
 - **`thresholds`**: Quantitative cutoffs for detection (e.g., entropy > 7.2, decompression ratio > 50). Empty `{}` if none.
 
 - **`confidence_rules`**: Weighted evidence composition. Each rule describes a condition and its weight (sum normalizes to 1.0). Used for probabilistic confidence.
 
-- **`evidence_binding`**: Pointers to where evidence is extracted.  
+- **`evidence_binding`**: Pointers to where evidence is extracted. 
   - `captures`: byte ranges, file paths, telemetry logs.
 
-- **`extraction`**: How evidence is obtained.  
-  - `method`: e.g., `StaticParsing`, `DynamicMonitoring`, `Hybrid`.  
+- **`extraction`**: How evidence is obtained. 
+  - `method`: e.g., `StaticParsing`, `DynamicMonitoring`, `Hybrid`. 
   - `failure_modes`: known parser weaknesses or caveats.
 
 - **`false_positives`**: Known conditions that may incorrectly trigger the predicate.
 
 - **`false_negatives`**: Known conditions that may miss true positives.
 
-- **`provenance`**: Sources and authorship.  
-  - `citations`: list of references (`ref: Cxxx`) with inline comments giving the title.  
+- **`provenance`**: Sources and authorship. 
+  - `citations`: list of references (`ref: Cxxx`) with inline comments giving the title. 
   - `author`: attribution (e.g., `@gview-team`).
 
-- **`implementation`**: Engineering state.  
-  - `status`: `planned`, `implemented`, `supported`, or `deprecated`.  
+- **`implementation`**: Engineering state. 
+  - `status`: `planned`, `implemented`, `supported`, or `deprecated`. 
   - `perf_cost`: heuristic runtime cost (`low`, `medium`, `high`).
 
 - **`version`**: Schema/definition version number. Monotonic, increments when the definition changes.

@@ -1,0 +1,30 @@
+id: F0064
+code: M-251
+name: ViewshadowcopyeventsIfDeletesshadowcopiesAndViewedshadowcopyevents
+signature: 'DeletesShadowCopies(f) ∧ ¬ViewedShadowCopyEvents(f) → Suggest(ViewShadowCopyEvents(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: VSS deletion observed. Inspect events?
+trigger_logic:
+  antecedent:
+  - DeletesShadowCopies(f)=true
+  - ¬ViewedShadowCopyEvents(f)=true
+  consequent:
+  - Suggest(ViewShadowCopyEvents(f))
+action:
+  suggest: ViewShadowCopyEvents(f)
+message: 'VSS deletion observed. Inspect events?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,30 @@
+id: F0087
+code: S-402
+name: ProtectuserdirsIfEncryptsmanyfilesAndSetreadonlydirs
+signature: 'EncryptsManyFiles(f) ∧ ¬SetReadonlyDirs(sbx, any) → Suggest(ProtectUserDirs(sbx))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Protect user directories (read‑only policy).
+trigger_logic:
+  antecedent:
+  - EncryptsManyFiles(f)=true
+  - ¬SetReadonlyDirs(sbx, any)=true
+  consequent:
+  - Suggest(ProtectUserDirs(sbx))
+action:
+  suggest: ProtectUserDirs(sbx)
+message: 'Protect user directories (read‑only policy).'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '10m'
+tags: []
+severity:
+  level: critical
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

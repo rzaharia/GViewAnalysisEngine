@@ -1,0 +1,69 @@
+id: I0022
+name: IswordHasmacrosToIsmaliciousFinalHigh
+signature: IsWord(f) ∧ HasMacros(f) ∧ HasMacroDownloadAndExecute(f) ∧ UserEnabledMacros(u,f)
+  → IsMalicious(f) {Final, high}
+category: Behavioral/OfficeMacros
+scope:
+  object: file
+  postconditions:
+  - Flag: IsMalicious(f) {Final, high}
+description: When IsWord(f) ∧ HasMacros(f) ∧ HasMacroDownloadAndExecute(f) ∧ UserEnabledMacros(u,f)
+  holds, assert IsMalicious(f) {Final, high}.
+trigger_logic:
+  antecedent:
+  - IsWord(f)=true
+  - HasMacros(f)=true
+  - HasMacroDownloadAndExecute(f)=true
+  - UserEnabledMacros(u,f)=true
+  consequent:
+  - IsMalicious(f) {Final, high}=true
+evidence_binding:
+  requires:
+  - artifact: ole_streams
+    fields:
+    - vba_module_names
+    - autoexec_markers
+    - external_rels
+  - artifact: process_tree
+    fields:
+    - parent_pid
+    - cmdline
+    - child_procs
+  - artifact: netflow
+    fields:
+    - dst_ip
+    - dst_domain
+    - url
+    - bytes_out
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if ParentProcess is Office: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Template swap after enable
+  - DGA C2 to evade TI
+  mitigations:
+  - Block remote templates
+  - AMSI+VBA logging
+provenance:
+  citations:
+  - id: C001
+  - id: C009
+  - id: C045
+  - id: C038
+  - id: C036
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

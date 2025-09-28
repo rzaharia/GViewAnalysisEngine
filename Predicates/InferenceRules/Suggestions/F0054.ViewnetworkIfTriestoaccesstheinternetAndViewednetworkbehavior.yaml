@@ -1,0 +1,30 @@
+id: F0054
+code: M-230
+name: ViewnetworkIfTriestoaccesstheinternetAndViewednetworkbehavior
+signature: 'TriesToAccessTheInternet(f) ∧ ¬ViewedNetworkBehavior(f) → Suggest(ViewNetwork(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Outbound connections observed. Review endpoints?
+trigger_logic:
+  antecedent:
+  - TriesToAccessTheInternet(f)=true
+  - ¬ViewedNetworkBehavior(f)=true
+  consequent:
+  - Suggest(ViewNetwork(f))
+action:
+  suggest: ViewNetwork(f)
+message: 'Outbound connections observed. Review endpoints?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

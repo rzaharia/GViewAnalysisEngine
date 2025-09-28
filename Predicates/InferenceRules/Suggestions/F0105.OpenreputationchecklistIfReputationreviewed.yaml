@@ -1,0 +1,29 @@
+id: F0105
+code: G-1100
+name: OpenreputationchecklistIfReputationreviewed
+signature: '¬ReputationReviewed(f) → Suggest(OpenReputationChecklist(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Reputation not reviewed. Hashes + TI + signer.
+trigger_logic:
+  antecedent:
+  - ¬ReputationReviewed(f)=true
+  consequent:
+  - Suggest(OpenReputationChecklist(f))
+action:
+  suggest: OpenReputationChecklist(f)
+message: 'Reputation not reviewed. Hashes + TI + signer.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '45m'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

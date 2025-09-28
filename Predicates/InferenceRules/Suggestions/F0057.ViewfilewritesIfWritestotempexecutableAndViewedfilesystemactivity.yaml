@@ -1,0 +1,30 @@
+id: F0057
+code: M-233
+name: ViewfilewritesIfWritestotempexecutableAndViewedfilesystemactivity
+signature: 'WritesToTempExecutable(f) ∧ ¬ViewedFileSystemActivity(f) → Suggest(ViewFileWrites(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: New executable(s) in temp. Review drops?
+trigger_logic:
+  antecedent:
+  - WritesToTempExecutable(f)=true
+  - ¬ViewedFileSystemActivity(f)=true
+  consequent:
+  - Suggest(ViewFileWrites(f))
+action:
+  suggest: ViewFileWrites(f)
+message: 'New executable(s) in temp. Review drops?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

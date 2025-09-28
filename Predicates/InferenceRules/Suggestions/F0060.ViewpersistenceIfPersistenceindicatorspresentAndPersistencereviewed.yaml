@@ -1,0 +1,30 @@
+id: F0060
+code: M-240
+name: ViewpersistenceIfPersistenceindicatorspresentAndPersistencereviewed
+signature: 'PersistenceIndicatorsPresent(f) ∧ ¬PersistenceReviewed(f) → Suggest(ViewPersistence(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Persistence artifacts found. Review them now?
+trigger_logic:
+  antecedent:
+  - PersistenceIndicatorsPresent(f)=true
+  - ¬PersistenceReviewed(f)=true
+  consequent:
+  - Suggest(ViewPersistence(f))
+action:
+  suggest: ViewPersistence(f)
+message: 'Persistence artifacts found. Review them now?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

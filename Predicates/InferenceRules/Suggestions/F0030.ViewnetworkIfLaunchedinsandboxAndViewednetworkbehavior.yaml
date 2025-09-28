@@ -1,0 +1,32 @@
+id: F0030
+code: U-111
+name: ViewnetworkIfLaunchedinsandboxAndViewednetworkbehavior
+signature: 'LaunchedInSandbox(f) ∧ ¬ViewedNetworkBehavior(f) → Suggest(ViewNetwork(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Network telemetry available. Check connections?
+trigger_logic:
+  antecedent:
+  - LaunchedInSandbox(f)=true
+  - ¬ViewedNetworkBehavior(f)=true
+  consequent:
+  - Suggest(ViewNetwork(f))
+action:
+  suggest: ViewNetwork(f)
+message: 'Network telemetry available. Check connections?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '15m'
+tags:
+  - dynamic
+  - network
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

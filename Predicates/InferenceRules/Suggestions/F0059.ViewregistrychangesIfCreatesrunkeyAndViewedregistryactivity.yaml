@@ -1,0 +1,30 @@
+id: F0059
+code: M-235
+name: ViewregistrychangesIfCreatesrunkeyAndViewedregistryactivity
+signature: 'CreatesRunKey(f) ∧ ¬ViewedRegistryActivity(f) → Suggest(ViewRegistryChanges(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Startup persistence detected. Inspect registry changes?
+trigger_logic:
+  antecedent:
+  - CreatesRunKey(f)=true
+  - ¬ViewedRegistryActivity(f)=true
+  consequent:
+  - Suggest(ViewRegistryChanges(f))
+action:
+  suggest: ViewRegistryChanges(f)
+message: 'Startup persistence detected. Inspect registry changes?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

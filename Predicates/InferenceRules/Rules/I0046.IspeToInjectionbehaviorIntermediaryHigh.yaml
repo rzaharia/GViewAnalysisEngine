@@ -1,0 +1,61 @@
+id: I0046
+name: IspeToInjectionbehaviorIntermediaryHigh
+signature: IsPe(f) ∧ (CreatesRemoteThread(f) ∨ WritesProcessMemory(f) ∨ AllocatesRWXMemory(f))
+  → InjectionBehavior(f) {Intermediary, high}
+category: Behavioral/PEBinary
+scope:
+  object: file
+  postconditions:
+  - Derive: InjectionBehavior(f) {Intermediary, high}
+description: When IsPe(f) ∧ (CreatesRemoteThread(f) ∨ WritesProcessMemory(f) ∨ AllocatesRWXMemory(f))
+  holds, assert InjectionBehavior(f) {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - (CreatesRemoteThread(f) ∨ WritesProcessMemory(f) ∨ AllocatesRWXMemory(f))=true
+  consequent:
+  - InjectionBehavior(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: pe_static
+    fields:
+    - imports
+    - sections
+    - entropy
+  - artifact: process_tree
+    fields:
+    - parent
+    - children
+    - injection_calls
+  - artifact: fs_events
+    fields:
+    - writes
+    - drops
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Direct syscalls to evade hooks
+  - Signed vulnerable driver (BYOVD)
+  mitigations:
+  - Kernel ETW for syscalls
+  - Blocklist vulnerable drivers
+provenance:
+  citations:
+  - id: C024
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

@@ -1,0 +1,72 @@
+id: I0056
+name: TriestoaccesstheinternetUseshttpsrequestsToSuspicioustlsuseIntermediaryMed
+signature: TriesToAccessTheInternet(f) ∧ UsesHTTPSRequests(f) ∧ UsesSelfSignedTls(f)
+  → SuspiciousTlsUse(f) {Intermediary, med}
+category: Behavioral/NetworkC2
+scope:
+  object: file
+  postconditions:
+  - Derive: SuspiciousTlsUse(f) {Intermediary, med}
+description: When TriesToAccessTheInternet(f) ∧ UsesHTTPSRequests(f) ∧ UsesSelfSignedTls(f)
+  holds, assert SuspiciousTlsUse(f) {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - TriesToAccessTheInternet(f)=true
+  - UsesHTTPSRequests(f)=true
+  - UsesSelfSignedTls(f)=true
+  consequent:
+  - SuspiciousTlsUse(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: netflow
+    fields:
+    - dst_ip
+    - dst_domain
+    - url
+    - proto
+    - bytes_out
+    - bytes_in
+    - ja3
+    - sni
+  - artifact: dns_logs
+    fields:
+    - qname
+    - rcode
+    - dga_score
+  - artifact: tls
+    fields:
+    - issuer
+    - subject
+    - self_signed
+    - validity
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Endpoint not in allowlist and SNI mismatch: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Domain fronting
+  - CDN egress mimic
+  - Tor bridges
+  mitigations:
+  - JA3/JA4S fingerprinting
+  - SNI+DoH correlation
+  - Egress allowlists
+provenance:
+  citations:
+  - id: C039
+  - id: C036
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

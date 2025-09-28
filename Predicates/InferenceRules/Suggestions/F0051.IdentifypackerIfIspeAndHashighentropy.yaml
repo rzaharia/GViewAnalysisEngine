@@ -1,0 +1,31 @@
+id: F0051
+code: M-221
+name: IdentifypackerIfIspeAndHashighentropy
+signature: 'IsPe(f) ∧ HasHighEntropy(f) ∧ ¬RanPackerId(f) → Suggest(IdentifyPacker(f))'
+category: Suggestion/PE
+scope:
+  object: file
+  format: generic
+description: Likely packed. Identify packer?
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - HasHighEntropy(f)=true
+  - ¬RanPackerId(f)=true
+  consequent:
+  - Suggest(IdentifyPacker(f))
+action:
+  suggest: IdentifyPacker(f)
+message: 'Likely packed. Identify packer?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '45m'
+tags: []
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

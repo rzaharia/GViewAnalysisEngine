@@ -1,0 +1,31 @@
+id: F0097
+code: A-802
+name: LaunchsandboxIfIsinstallerAndDownloadsfrominternet
+signature: 'IsInstaller(f) ∧ (BinarySpawnsScripting(f) ∨ DownloadsFromInternet(f)) ∧ ¬LaunchedInSandbox(f) → Suggest(LaunchSandbox(f))'
+category: Suggestion/Scripts
+scope:
+  object: file
+  format: Script
+description: Installer exhibits risky behavior. Detonate safely.
+trigger_logic:
+  antecedent:
+  - IsInstaller(f)=true
+  - (BinarySpawnsScripting(f) ∨ DownloadsFromInternet(f))=true
+  - ¬LaunchedInSandbox(f)=true
+  consequent:
+  - Suggest(LaunchSandbox(f))
+action:
+  suggest: LaunchSandbox(f)
+message: 'Installer exhibits risky behavior. Detonate safely.'
+explanation: 'Deobfuscation and dynamic invocation tracing expose hidden URLs, loaders, and privilege escalation steps.'
+cooldown: '30m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,53 @@
+id: I0035
+name: IsarchiveArchivebombheuristicToArchivebombsuspicionIntermediaryMed
+signature: IsArchive(f) ∧ ArchiveBombHeuristic(f) → ArchiveBombSuspicion(f) {Intermediary,
+  med}
+category: Behavioral/ArchiveContainer
+scope:
+  object: file
+  postconditions:
+  - Derive: ArchiveBombSuspicion(f) {Intermediary, med}
+description: When IsArchive(f) ∧ ArchiveBombHeuristic(f) holds, assert ArchiveBombSuspicion(f)
+  {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - IsArchive(f)=true
+  - ArchiveBombHeuristic(f)=true
+  consequent:
+  - ArchiveBombSuspicion(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: archive_manifest
+    fields:
+    - members
+    - password_protected
+    - double_extensions
+  - artifact: email_headers
+    fields:
+    - from
+    - subject
+    - attachments
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C012
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

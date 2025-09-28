@@ -1,0 +1,32 @@
+id: F0012
+code: F-021
+name: ViewdynamicevalIfIspowershellscriptAndContainsdownloadercode
+signature: 'IsPowerShellScript(f) ∧ ContainsDownloaderCode(f) → Suggest(ViewDynamicEval(f))'
+category: Suggestion/Scripts
+scope:
+  object: file
+  format: Script
+description: Downloader patterns found. Inspect dynamic invocation?
+trigger_logic:
+  antecedent:
+  - IsPowerShellScript(f)=true
+  - ContainsDownloaderCode(f)=true
+  consequent:
+  - Suggest(ViewDynamicEval(f))
+action:
+  suggest: ViewDynamicEval(f)
+message: 'Downloader patterns found. Inspect dynamic invocation?'
+explanation: 'Deobfuscation and dynamic invocation tracing expose hidden URLs, loaders, and privilege escalation steps.'
+cooldown: '30m'
+tags:
+  - ps1
+  - downloader
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

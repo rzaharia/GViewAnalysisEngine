@@ -1,0 +1,31 @@
+id: F0027
+code: U-102
+name: ViewstringsIfOpenedAndViewedstrings
+signature: 'Opened(f) ∧ ¬ViewedStrings(f) → Suggest(ViewStrings(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Review strings for URLs, IOCs and clues?
+trigger_logic:
+  antecedent:
+  - Opened(f)=true
+  - ¬ViewedStrings(f)=true
+  consequent:
+  - Suggest(ViewStrings(f))
+action:
+  suggest: ViewStrings(f)
+message: 'Review strings for URLs, IOCs and clues?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '45m'
+tags:
+  - strings
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

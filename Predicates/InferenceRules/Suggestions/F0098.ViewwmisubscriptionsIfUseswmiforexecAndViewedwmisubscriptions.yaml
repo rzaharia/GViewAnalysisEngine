@@ -1,0 +1,30 @@
+id: F0098
+code: L-900
+name: ViewwmisubscriptionsIfUseswmiforexecAndViewedwmisubscriptions
+signature: 'UsesWmiForExec(f) ∧ ¬ViewedWmiSubscriptions(f) → Suggest(ViewWmiSubscriptions(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: WMI activity. Inspect subscriptions/consumers.
+trigger_logic:
+  antecedent:
+  - UsesWmiForExec(f)=true
+  - ¬ViewedWmiSubscriptions(f)=true
+  consequent:
+  - Suggest(ViewWmiSubscriptions(f))
+action:
+  suggest: ViewWmiSubscriptions(f)
+message: 'WMI activity. Inspect subscriptions/consumers.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

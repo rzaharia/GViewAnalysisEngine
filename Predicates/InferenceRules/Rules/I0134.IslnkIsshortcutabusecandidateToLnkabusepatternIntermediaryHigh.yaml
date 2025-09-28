@@ -1,0 +1,49 @@
+id: I0134
+name: IslnkIsshortcutabusecandidateToLnkabusepatternIntermediaryHigh
+signature: IsLnk(f) ∧ IsShortcutAbuseCandidate(f) → LnkAbusePattern(f) {Intermediary,
+  high}
+category: Behavioral/LnkAbuse
+scope:
+  object: file
+  postconditions:
+  - Derive: LnkAbusePattern(f) {Intermediary, high}
+description: When IsLnk(f) ∧ IsShortcutAbuseCandidate(f) holds, assert LnkAbusePattern(f)
+  {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - IsLnk(f)=true
+  - IsShortcutAbuseCandidate(f)=true
+  consequent:
+  - LnkAbusePattern(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: lnk
+    fields:
+    - target
+    - args
+    - icon
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C014
+  - id: C015
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

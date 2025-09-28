@@ -1,0 +1,59 @@
+id: I0044
+name: ScriptobfuscatedTriestoaccesstheinternetToIssuspiciousFinalHigh
+signature: ScriptObfuscated(f) ∧ TriesToAccessTheInternet(f) ∧ (SpawnsCmd(f) ∨ SpawnsPowerShell(f))
+  → IsSuspicious(f) {Final, high}
+category: Behavioral/Scripts
+scope:
+  object: file
+  postconditions:
+  - Flag: IsSuspicious(f) {Final, high}
+description: When ScriptObfuscated(f) ∧ TriesToAccessTheInternet(f) ∧ (SpawnsCmd(f)
+  ∨ SpawnsPowerShell(f)) holds, assert IsSuspicious(f) {Final, high}.
+trigger_logic:
+  antecedent:
+  - ScriptObfuscated(f)=true
+  - TriesToAccessTheInternet(f)=true
+  - (SpawnsCmd(f) ∨ SpawnsPowerShell(f))=true
+  consequent:
+  - IsSuspicious(f) {Final, high}=true
+evidence_binding:
+  requires:
+  - artifact: script_source
+    fields:
+    - suspicious_keywords
+    - urls
+    - base64_blobs
+  - artifact: process_tree
+    fields:
+    - interpreter
+    - cmdline
+  - artifact: netflow
+    fields:
+    - dst_domain
+    - url
+    - bytes_out
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Endpoint not in allowlist and SNI mismatch: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C056
+  - id: C057
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

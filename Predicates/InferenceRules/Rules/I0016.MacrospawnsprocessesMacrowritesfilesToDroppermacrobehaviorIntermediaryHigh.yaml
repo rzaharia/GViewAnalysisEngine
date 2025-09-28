@@ -1,0 +1,65 @@
+id: I0016
+name: MacrospawnsprocessesMacrowritesfilesToDroppermacrobehaviorIntermediaryHigh
+signature: MacroSpawnsProcesses(f) ∧ MacroWritesFiles(f) → DropperMacroBehavior(f)
+  {Intermediary, high}
+category: Behavioral/OfficeMacros
+scope:
+  object: file
+  postconditions:
+  - Derive: DropperMacroBehavior(f) {Intermediary, high}
+description: When MacroSpawnsProcesses(f) ∧ MacroWritesFiles(f) holds, assert DropperMacroBehavior(f)
+  {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - MacroSpawnsProcesses(f)=true
+  - MacroWritesFiles(f)=true
+  consequent:
+  - DropperMacroBehavior(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: ole_streams
+    fields:
+    - vba_module_names
+    - autoexec_markers
+    - external_rels
+  - artifact: process_tree
+    fields:
+    - parent_pid
+    - cmdline
+    - child_procs
+  - artifact: netflow
+    fields:
+    - dst_ip
+    - dst_domain
+    - url
+    - bytes_out
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Template swap after enable
+  - DGA C2 to evade TI
+  mitigations:
+  - Block remote templates
+  - AMSI+VBA logging
+provenance:
+  citations:
+  - id: C001
+  - id: C009
+  - id: C045
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

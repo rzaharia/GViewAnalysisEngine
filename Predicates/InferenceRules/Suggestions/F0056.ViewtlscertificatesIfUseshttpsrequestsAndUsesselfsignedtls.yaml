@@ -1,0 +1,31 @@
+id: F0056
+code: M-232
+name: ViewtlscertificatesIfUseshttpsrequestsAndUsesselfsignedtls
+signature: 'UsesHTTPSRequests(f) ∧ UsesSelfSignedTls(f) ∧ ¬ViewedTlsCertificates(f) → Suggest(ViewTlsCertificates(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Self‑signed/invalid TLS. Inspect certificate chain?
+trigger_logic:
+  antecedent:
+  - UsesHTTPSRequests(f)=true
+  - UsesSelfSignedTls(f)=true
+  - ¬ViewedTlsCertificates(f)=true
+  consequent:
+  - Suggest(ViewTlsCertificates(f))
+action:
+  suggest: ViewTlsCertificates(f)
+message: 'Self‑signed/invalid TLS. Inspect certificate chain?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

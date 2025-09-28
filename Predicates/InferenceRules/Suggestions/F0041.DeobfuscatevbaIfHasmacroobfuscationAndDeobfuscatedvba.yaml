@@ -1,0 +1,35 @@
+id: F0041
+code: M-201
+name: DeobfuscatevbaIfHasmacroobfuscationAndDeobfuscatedvba
+signature: 'HasMacroObfuscation(f) ∧ ¬DeobfuscatedVBA(f) → Suggest(DeobfuscateVBA(f))'
+category: Suggestion/Office
+scope:
+  object: file
+  format: generic
+description: Obfuscated macros found. Deobfuscate now?
+trigger_logic:
+  antecedent:
+  - HasMacroObfuscation(f)=true
+  - ¬DeobfuscatedVBA(f)=true
+  consequent:
+  - Suggest(DeobfuscateVBA(f))
+action:
+  suggest: DeobfuscateVBA(f)
+message: 'Obfuscated macros found. Deobfuscate now?'
+explanation: 'Office macros are a common initial execution vector; reviewing macro content improves triage and reveals downloader or persistence code.'
+cooldown: '30m'
+tags:
+  - macro
+  - obfuscation
+severity:
+  level: high
+provenance:
+  citations:
+  - id: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - id: C045  # 'User Execution: Malicious File (T1204.002)'
+  - id: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

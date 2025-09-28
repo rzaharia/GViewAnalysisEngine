@@ -1,0 +1,30 @@
+id: F0103
+code: R-1001
+name: QuarantinesampleIfIsmaliciousAndQuarantinedsample
+signature: 'IsMalicious(f) ∧ ¬QuarantinedSample(f) → Suggest(QuarantineSample(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Quarantine sample to prevent accidental execution.
+trigger_logic:
+  antecedent:
+  - IsMalicious(f)=true
+  - ¬QuarantinedSample(f)=true
+  consequent:
+  - Suggest(QuarantineSample(f))
+action:
+  suggest: QuarantineSample(f)
+message: 'Quarantine sample to prevent accidental execution.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '1h'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

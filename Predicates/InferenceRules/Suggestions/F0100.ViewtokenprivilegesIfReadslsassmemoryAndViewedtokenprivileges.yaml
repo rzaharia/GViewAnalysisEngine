@@ -1,0 +1,30 @@
+id: F0100
+code: L-902
+name: ViewtokenprivilegesIfReadslsassmemoryAndViewedtokenprivileges
+signature: 'ReadsLsassMemory(f) ∧ ¬ViewedTokenPrivileges(f) → Suggest(ViewTokenPrivileges(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Credential theft indicator. Review token scope.
+trigger_logic:
+  antecedent:
+  - ReadsLsassMemory(f)=true
+  - ¬ViewedTokenPrivileges(f)=true
+  consequent:
+  - Suggest(ViewTokenPrivileges(f))
+action:
+  suggest: ViewTokenPrivileges(f)
+message: 'Credential theft indicator. Review token scope.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '15m'
+tags: []
+severity:
+  level: critical
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

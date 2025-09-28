@@ -1,0 +1,30 @@
+id: F0066
+code: M-260
+name: ViewexfilIfReadsmanydocsAndViewedexfiltimeline
+signature: 'ReadsManyDocs(f) ∧ ¬ViewedExfilTimeline(f) → Suggest(ViewExfil(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Mass document reads. Check exfil timeline?
+trigger_logic:
+  antecedent:
+  - ReadsManyDocs(f)=true
+  - ¬ViewedExfilTimeline(f)=true
+  consequent:
+  - Suggest(ViewExfil(f))
+action:
+  suggest: ViewExfil(f)
+message: 'Mass document reads. Check exfil timeline?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

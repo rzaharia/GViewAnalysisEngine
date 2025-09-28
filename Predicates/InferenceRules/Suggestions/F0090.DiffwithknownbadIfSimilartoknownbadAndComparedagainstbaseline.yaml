@@ -1,0 +1,30 @@
+id: F0090
+code: C-601
+name: DiffwithknownbadIfSimilartoknownbadAndComparedagainstbaseline
+signature: 'SimilarToKnownBad(f) ∧ ¬ComparedAgainstBaseline(f) → Suggest(DiffWithKnownBad(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Diff against prior known‑bad to speed triage.
+trigger_logic:
+  antecedent:
+  - SimilarToKnownBad(f)=true
+  - ¬ComparedAgainstBaseline(f)=true
+  consequent:
+  - Suggest(DiffWithKnownBad(f))
+action:
+  suggest: DiffWithKnownBad(f)
+message: 'Diff against prior known‑bad to speed triage.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '1h'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

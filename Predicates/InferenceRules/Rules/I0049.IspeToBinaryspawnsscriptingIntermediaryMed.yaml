@@ -1,0 +1,62 @@
+id: I0049
+name: IspeToBinaryspawnsscriptingIntermediaryMed
+signature: IsPe(f) ∧ (SpawnsPowerShell(f) ∨ SpawnsCmd(f) ∨ SpawnsWscript(f)) → BinarySpawnsScripting(f)
+  {Intermediary, med}
+category: Behavioral/PEBinary
+scope:
+  object: file
+  postconditions:
+  - Derive: BinarySpawnsScripting(f) {Intermediary, med}
+description: When IsPe(f) ∧ (SpawnsPowerShell(f) ∨ SpawnsCmd(f) ∨ SpawnsWscript(f))
+  holds, assert BinarySpawnsScripting(f) {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - (SpawnsPowerShell(f) ∨ SpawnsCmd(f) ∨ SpawnsWscript(f))=true
+  consequent:
+  - BinarySpawnsScripting(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: pe_static
+    fields:
+    - imports
+    - sections
+    - entropy
+  - artifact: process_tree
+    fields:
+    - parent
+    - children
+    - injection_calls
+  - artifact: fs_events
+    fields:
+    - writes
+    - drops
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Direct syscalls to evade hooks
+  - Signed vulnerable driver (BYOVD)
+  mitigations:
+  - Kernel ETW for syscalls
+  - Blocklist vulnerable drivers
+provenance:
+  citations:
+  - id: C056
+  - id: C057
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

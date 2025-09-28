@@ -1,0 +1,30 @@
+id: F0070
+code: M-271
+name: EnabletimewarpIfDelaysexecutionlongAndEnabledtimewarp
+signature: 'DelaysExecutionLong(f) ∧ ¬EnabledTimeWarp(f) → Suggest(EnableTimeWarp(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Long sleeps observed. Enable time warp?
+trigger_logic:
+  antecedent:
+  - DelaysExecutionLong(f)=true
+  - ¬EnabledTimeWarp(f)=true
+  consequent:
+  - Suggest(EnableTimeWarp(f))
+action:
+  suggest: EnableTimeWarp(f)
+message: 'Long sleeps observed. Enable time warp?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,30 @@
+id: F0107
+code: G-1102
+name: OpendynamicchecklistIfLaunchedinsandboxAndDynamicreviewed
+signature: 'LaunchedInSandbox(f) ∧ ¬DynamicReviewed(f) → Suggest(OpenDynamicChecklist(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Dynamic triage incomplete. Proc/Net/FS/Reg.
+trigger_logic:
+  antecedent:
+  - LaunchedInSandbox(f)=true
+  - ¬DynamicReviewed(f)=true
+  consequent:
+  - Suggest(OpenDynamicChecklist(f))
+action:
+  suggest: OpenDynamicChecklist(f)
+message: 'Dynamic triage incomplete. Proc/Net/FS/Reg.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

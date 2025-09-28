@@ -1,0 +1,31 @@
+id: F0043
+code: M-203
+name: ViewexternaltemplatesIfContainsexternaltemplaterefAndViewedexternaltemplaterels
+signature: 'ContainsExternalTemplateRef(f) ∧ ¬ViewedExternalTemplateRels(f) → Suggest(ViewExternalTemplates(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Remote template reference. Inspect RELs?
+trigger_logic:
+  antecedent:
+  - ContainsExternalTemplateRef(f)=true
+  - ¬ViewedExternalTemplateRels(f)=true
+  consequent:
+  - Suggest(ViewExternalTemplates(f))
+action:
+  suggest: ViewExternalTemplates(f)
+message: 'Remote template reference. Inspect RELs?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: warn
+provenance:
+  citations:
+  - id: C004  # 'Template Injection (T1221)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

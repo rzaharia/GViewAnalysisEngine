@@ -1,0 +1,57 @@
+id: I0026
+name: IspdfPdfhasurlactionsToPdfurlinteractionIntermediaryMed
+signature: IsPdf(f) ∧ PdfHasUrlActions(f) → PdfUrlInteraction(f) {Intermediary, med}
+category: Behavioral/PdfRtfOle
+scope:
+  object: file
+  postconditions:
+  - Derive: PdfUrlInteraction(f) {Intermediary, med}
+description: When IsPdf(f) ∧ PdfHasUrlActions(f) holds, assert PdfUrlInteraction(f)
+  {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - IsPdf(f)=true
+  - PdfHasUrlActions(f)=true
+  consequent:
+  - PdfUrlInteraction(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: pdf_objects
+    fields:
+    - OpenAction
+    - Launch
+    - JS_count
+  - artifact: process_tree
+    fields:
+    - parent_pid
+    - cmdline
+  - artifact: netflow
+    fields:
+    - dst_ip
+    - dst_domain
+    - url
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C009
+  - id: C045
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,30 @@
+id: F0062
+code: M-242
+name: ViewtokenprivilegesIfAcquiressedebugprivilegeAndViewedtokenprivileges
+signature: 'AcquiresSeDebugPrivilege(f) ∧ ¬ViewedTokenPrivileges(f) → Suggest(ViewTokenPrivileges(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Debug privilege acquired. Review token changes?
+trigger_logic:
+  antecedent:
+  - AcquiresSeDebugPrivilege(f)=true
+  - ¬ViewedTokenPrivileges(f)=true
+  consequent:
+  - Suggest(ViewTokenPrivileges(f))
+action:
+  suggest: ViewTokenPrivileges(f)
+message: 'Debug privilege acquired. Review token changes?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

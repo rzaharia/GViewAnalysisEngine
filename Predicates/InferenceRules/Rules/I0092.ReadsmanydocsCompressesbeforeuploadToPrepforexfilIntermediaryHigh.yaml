@@ -1,0 +1,58 @@
+id: I0092
+name: ReadsmanydocsCompressesbeforeuploadToPrepforexfilIntermediaryHigh
+signature: ReadsManyDocs(f) ∧ CompressesBeforeUpload(f) → PrepForExfil(f) {Intermediary,
+  high}
+category: Behavioral/Exfiltration
+scope:
+  object: file
+  postconditions:
+  - Derive: PrepForExfil(f) {Intermediary, high}
+description: When ReadsManyDocs(f) ∧ CompressesBeforeUpload(f) holds, assert PrepForExfil(f)
+  {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - ReadsManyDocs(f)=true
+  - CompressesBeforeUpload(f)=true
+  consequent:
+  - PrepForExfil(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: netflow
+    fields:
+    - dst_domain
+    - url
+    - bytes_out
+  - artifact: cloud_api
+    fields:
+    - provider
+    - endpoint
+    - object_count
+  - artifact: timeline
+    fields:
+    - doc_reads
+    - archive_ops
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C040
+  - id: C043
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

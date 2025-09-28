@@ -1,0 +1,32 @@
+id: F0015
+code: F-031
+name: ViewresourcesIfIspeAndContainsembeddedexecutable
+signature: 'IsPe(f) ∧ ContainsEmbeddedExecutable(f) → Suggest(ViewResources(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Embedded payloads detected. Inspect resources?
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - ContainsEmbeddedExecutable(f)=true
+  consequent:
+  - Suggest(ViewResources(f))
+action:
+  suggest: ViewResources(f)
+message: 'Embedded payloads detected. Inspect resources?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags:
+  - pe
+  - resources
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

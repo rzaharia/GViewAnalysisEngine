@@ -1,0 +1,53 @@
+id: I0101
+name: EncryptsconfigurationToStealthconfigloaderIntermediaryMed
+signature: EncryptsConfiguration(f) ∧ (DirectSyscallIndicator(f) ∨ UnhooksNtdll(f))
+  → StealthConfigLoader(f) {Intermediary, med}
+category: Behavioral/AntiAnalysis
+scope:
+  object: file
+  postconditions:
+  - Derive: StealthConfigLoader(f) {Intermediary, med}
+description: When EncryptsConfiguration(f) ∧ (DirectSyscallIndicator(f) ∨ UnhooksNtdll(f))
+  holds, assert StealthConfigLoader(f) {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - EncryptsConfiguration(f)=true
+  - (DirectSyscallIndicator(f) ∨ UnhooksNtdll(f))=true
+  consequent:
+  - StealthConfigLoader(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: anti_vm
+    fields:
+    - registry_keys
+    - drivers
+    - timing
+  - artifact: process_tree
+    fields:
+    - ppid_spoofing
+    - unhooks
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C063
+  - id: C024
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

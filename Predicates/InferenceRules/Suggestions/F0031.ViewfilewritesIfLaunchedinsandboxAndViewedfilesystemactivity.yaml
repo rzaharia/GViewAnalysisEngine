@@ -1,0 +1,32 @@
+id: F0031
+code: U-112
+name: ViewfilewritesIfLaunchedinsandboxAndViewedfilesystemactivity
+signature: 'LaunchedInSandbox(f) ∧ ¬ViewedFileSystemActivity(f) → Suggest(ViewFileWrites(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Review filesystem changes?
+trigger_logic:
+  antecedent:
+  - LaunchedInSandbox(f)=true
+  - ¬ViewedFileSystemActivity(f)=true
+  consequent:
+  - Suggest(ViewFileWrites(f))
+action:
+  suggest: ViewFileWrites(f)
+message: 'Review filesystem changes?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '15m'
+tags:
+  - dynamic
+  - fs
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

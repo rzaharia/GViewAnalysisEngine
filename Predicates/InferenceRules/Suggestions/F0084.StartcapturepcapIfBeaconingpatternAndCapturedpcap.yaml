@@ -1,0 +1,31 @@
+id: F0084
+code: P-304
+name: StartcapturepcapIfBeaconingpatternAndCapturedpcap
+signature: 'BeaconingPattern(f) ∧ ¬CapturedPcap(f) ∧ Within(15m) → Suggest(StartCapturePcap(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Beaconing ongoing. Capture PCAP for C2 analysis.
+trigger_logic:
+  antecedent:
+  - BeaconingPattern(f)=true
+  - ¬CapturedPcap(f)=true
+  - Within(15m)=true
+  consequent:
+  - Suggest(StartCapturePcap(f))
+action:
+  suggest: StartCapturePcap(f)
+message: 'Beaconing ongoing. Capture PCAP for C2 analysis.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '15m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,32 @@
+id: F0039
+code: U-133
+name: AssigntoselfIfAddedtocaseAndAssignedto
+signature: 'AddedToCase(f, caseId) ∧ ¬AssignedTo(self, f) → Suggest(AssignToSelf(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Assign ownership to yourself?
+trigger_logic:
+  antecedent:
+  - AddedToCase(f, caseId)=true
+  - ¬AssignedTo(self, f)=true
+  consequent:
+  - Suggest(AssignToSelf(f))
+action:
+  suggest: AssignToSelf(f)
+message: 'Assign ownership to yourself?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '1h'
+tags:
+  - case
+  - ownership
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

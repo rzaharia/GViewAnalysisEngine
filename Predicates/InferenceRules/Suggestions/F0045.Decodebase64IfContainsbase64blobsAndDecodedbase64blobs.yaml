@@ -1,0 +1,30 @@
+id: F0045
+code: M-210
+name: Decodebase64IfContainsbase64blobsAndDecodedbase64blobs
+signature: 'ContainsBase64Blobs(f) ∧ ¬DecodedBase64Blobs(f) → Suggest(DecodeBase64(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Base64 blobs detected. Decode for payloads?
+trigger_logic:
+  antecedent:
+  - ContainsBase64Blobs(f)=true
+  - ¬DecodedBase64Blobs(f)=true
+  consequent:
+  - Suggest(DecodeBase64(f))
+action:
+  suggest: DecodeBase64(f)
+message: 'Base64 blobs detected. Decode for payloads?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

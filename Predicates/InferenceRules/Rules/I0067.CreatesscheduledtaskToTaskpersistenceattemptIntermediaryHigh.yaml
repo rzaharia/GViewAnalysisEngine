@@ -1,0 +1,63 @@
+id: I0067
+name: CreatesscheduledtaskToTaskpersistenceattemptIntermediaryHigh
+signature: CreatesScheduledTask(f) → TaskPersistenceAttempt(f) {Intermediary, high}
+category: Behavioral/Persistence
+scope:
+  object: file
+  postconditions:
+  - Derive: TaskPersistenceAttempt(f) {Intermediary, high}
+description: When CreatesScheduledTask(f) holds, assert TaskPersistenceAttempt(f)
+  {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - CreatesScheduledTask(f)=true
+  consequent:
+  - TaskPersistenceAttempt(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: registry_events
+    fields:
+    - path
+    - value
+    - op
+  - artifact: scheduled_tasks
+    fields:
+    - name
+    - command
+  - artifact: services
+    fields:
+    - name
+    - image_path
+    - start_type
+  - artifact: wmi_events
+    fields:
+    - filter
+    - consumer
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Masqueraded service names
+  - Hidden WMI consumers
+  mitigations:
+  - Audit new autoruns
+  - WMI event subscription inventory
+provenance:
+  citations:
+  - id: C034
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

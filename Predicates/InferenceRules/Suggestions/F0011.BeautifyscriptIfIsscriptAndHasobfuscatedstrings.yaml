@@ -1,0 +1,32 @@
+id: F0011
+code: F-020
+name: BeautifyscriptIfIsscriptAndHasobfuscatedstrings
+signature: 'IsScript(f) ∧ HasObfuscatedStrings(f) → Suggest(BeautifyScript(f))'
+category: Suggestion/Scripts
+scope:
+  object: file
+  format: Script
+description: Obfuscated script. Beautify for review?
+trigger_logic:
+  antecedent:
+  - IsScript(f)=true
+  - HasObfuscatedStrings(f)=true
+  consequent:
+  - Suggest(BeautifyScript(f))
+action:
+  suggest: BeautifyScript(f)
+message: 'Obfuscated script. Beautify for review?'
+explanation: 'Deobfuscation and dynamic invocation tracing expose hidden URLs, loaders, and privilege escalation steps.'
+cooldown: '30m'
+tags:
+  - script
+  - obfuscation
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

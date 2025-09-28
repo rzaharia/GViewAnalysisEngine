@@ -1,0 +1,30 @@
+id: F0050
+code: M-220
+name: ViewimportsIfIspeAndViewedimports
+signature: 'IsPe(f) ∧ ¬ViewedImports(f) → Suggest(ViewImports(f))'
+category: Suggestion/PE
+scope:
+  object: file
+  format: generic
+description: Review imported APIs for intent?
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - ¬ViewedImports(f)=true
+  consequent:
+  - Suggest(ViewImports(f))
+action:
+  suggest: ViewImports(f)
+message: 'Review imported APIs for intent?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '45m'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

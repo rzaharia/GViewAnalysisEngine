@@ -1,0 +1,33 @@
+id: F0008
+code: F-011
+name: ViewpdfobjectsIfIspdfAndPdfhasopenaction
+signature: 'IsPdf(f) ∧ PdfHasOpenAction(f) → Suggest(ViewPdfObjects(f))'
+category: Suggestion/PdfRtfOle
+scope:
+  object: file
+  format: PDF/RTF/OLE
+description: Auto‑action triggers on open. Inspect object tree?
+trigger_logic:
+  antecedent:
+  - IsPdf(f)=true
+  - PdfHasOpenAction(f)=true
+  consequent:
+  - Suggest(ViewPdfObjects(f))
+action:
+  suggest: ViewPdfObjects(f)
+message: 'Auto‑action triggers on open. Inspect object tree?'
+explanation: 'Embedded JavaScript and auto‑actions in PDFs can execute on open; inspecting objects reduces blind spots in initial access.'
+cooldown: '30m'
+tags:
+  - pdf
+  - autorun
+severity:
+  level: high
+provenance:
+  citations:
+  - id: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

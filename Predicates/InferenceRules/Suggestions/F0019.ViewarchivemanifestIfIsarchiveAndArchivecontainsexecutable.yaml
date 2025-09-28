@@ -1,0 +1,31 @@
+id: F0019
+code: F-041
+name: ViewarchivemanifestIfIsarchiveAndArchivecontainsexecutable
+signature: 'IsArchive(f) ∧ ArchiveContainsExecutable(f) → Suggest(ViewArchiveManifest(f))'
+category: Suggestion/Archive
+scope:
+  object: file
+  format: ZIP/RAR/7z
+description: Executable(s) inside archive. Review manifest?
+trigger_logic:
+  antecedent:
+  - IsArchive(f)=true
+  - ArchiveContainsExecutable(f)=true
+  consequent:
+  - Suggest(ViewArchiveManifest(f))
+action:
+  suggest: ViewArchiveManifest(f)
+message: 'Executable(s) inside archive. Review manifest?'
+explanation: 'Archives are frequently used to bypass filtering; reviewing members and extensions helps catch droppers and masquerading.'
+cooldown: '30m'
+tags:
+  - archive
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

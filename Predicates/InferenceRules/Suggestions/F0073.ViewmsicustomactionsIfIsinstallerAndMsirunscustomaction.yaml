@@ -1,0 +1,31 @@
+id: F0073
+code: M-281
+name: ViewmsicustomactionsIfIsinstallerAndMsirunscustomaction
+signature: 'IsInstaller(f) ∧ MsiRunsCustomAction(f) ∧ ¬ViewedMsiCustomActions(f) → Suggest(ViewMsiCustomActions(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: MSI CustomAction(s) present. Inspect?
+trigger_logic:
+  antecedent:
+  - IsInstaller(f)=true
+  - MsiRunsCustomAction(f)=true
+  - ¬ViewedMsiCustomActions(f)=true
+  consequent:
+  - Suggest(ViewMsiCustomActions(f))
+action:
+  suggest: ViewMsiCustomActions(f)
+message: 'MSI CustomAction(s) present. Inspect?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

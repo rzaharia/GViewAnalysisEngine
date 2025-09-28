@@ -1,0 +1,32 @@
+id: F0024
+code: F-052
+name: RecordpublishertrustIfIssignedAndSignaturevalid
+signature: 'IsSigned(f) ∧ SignatureValid(f) ∧ SignedByKnownVendor(f) → Suggest(RecordPublisherTrust(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Trusted publisher signature. Record as benign candidate?
+trigger_logic:
+  antecedent:
+  - IsSigned(f)=true
+  - SignatureValid(f)=true
+  - SignedByKnownVendor(f)=true
+  consequent:
+  - Suggest(RecordPublisherTrust(f))
+action:
+  suggest: RecordPublisherTrust(f)
+message: 'Trusted publisher signature. Record as benign candidate?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '1h'
+tags:
+  - trust
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

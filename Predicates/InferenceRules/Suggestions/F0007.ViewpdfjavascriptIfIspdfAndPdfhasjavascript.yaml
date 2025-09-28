@@ -1,0 +1,33 @@
+id: F0007
+code: F-010
+name: ViewpdfjavascriptIfIspdfAndPdfhasjavascript
+signature: 'IsPdf(f) ∧ PdfHasJavaScript(f) → Suggest(ViewPdfJavaScript(f))'
+category: Suggestion/PdfRtfOle
+scope:
+  object: file
+  format: PDF/RTF/OLE
+description: Embedded JavaScript present. Inspect code?
+trigger_logic:
+  antecedent:
+  - IsPdf(f)=true
+  - PdfHasJavaScript(f)=true
+  consequent:
+  - Suggest(ViewPdfJavaScript(f))
+action:
+  suggest: ViewPdfJavaScript(f)
+message: 'Embedded JavaScript present. Inspect code?'
+explanation: 'Embedded JavaScript and auto‑actions in PDFs can execute on open; inspecting objects reduces blind spots in initial access.'
+cooldown: '30m'
+tags:
+  - pdf
+  - script
+severity:
+  level: high
+provenance:
+  citations:
+  - id: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

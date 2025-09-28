@@ -1,0 +1,58 @@
+id: I0041
+name: IsvbscriptToVbsdownloaderpatternIntermediaryMed
+signature: IsVBScript(f) ∧ (ContainsUrl(f) ∨ ContainsBase64Blobs(f)) → VbsDownloaderPattern(f)
+  {Intermediary, med}
+category: Behavioral/Scripts
+scope:
+  object: file
+  postconditions:
+  - Derive: VbsDownloaderPattern(f) {Intermediary, med}
+description: When IsVBScript(f) ∧ (ContainsUrl(f) ∨ ContainsBase64Blobs(f)) holds,
+  assert VbsDownloaderPattern(f) {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - IsVBScript(f)=true
+  - (ContainsUrl(f) ∨ ContainsBase64Blobs(f))=true
+  consequent:
+  - VbsDownloaderPattern(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: script_source
+    fields:
+    - suspicious_keywords
+    - urls
+    - base64_blobs
+  - artifact: process_tree
+    fields:
+    - interpreter
+    - cmdline
+  - artifact: netflow
+    fields:
+    - dst_domain
+    - url
+    - bytes_out
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C056
+  - id: C038
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

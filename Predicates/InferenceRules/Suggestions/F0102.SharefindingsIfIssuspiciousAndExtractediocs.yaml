@@ -1,0 +1,31 @@
+id: F0102
+code: R-1000
+name: SharefindingsIfIssuspiciousAndExtractediocs
+signature: 'IsSuspicious(f) ∧ ExtractedIOCs(f) ∧ ¬SharedReport(any, any) → Suggest(ShareFindings(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Share IOCs & summary with response team.
+trigger_logic:
+  antecedent:
+  - IsSuspicious(f)=true
+  - ExtractedIOCs(f)=true
+  - ¬SharedReport(any, any)=true
+  consequent:
+  - Suggest(ShareFindings(f))
+action:
+  suggest: ShareFindings(f)
+message: 'Share IOCs & summary with response team.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '2h'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

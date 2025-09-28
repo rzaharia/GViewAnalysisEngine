@@ -1,0 +1,30 @@
+id: F0089
+code: C-600
+name: ViewcampaigndiffsIfClusteredc2campaignAndViewedbehaviordiff
+signature: 'ClusteredC2Campaign(f, any) ∧ ¬ViewedBehaviorDiff(f, any) → Suggest(ViewCampaignDiffs(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Compare behavior across cluster samples.
+trigger_logic:
+  antecedent:
+  - ClusteredC2Campaign(f, any)=true
+  - ¬ViewedBehaviorDiff(f, any)=true
+  consequent:
+  - Suggest(ViewCampaignDiffs(f))
+action:
+  suggest: ViewCampaignDiffs(f)
+message: 'Compare behavior across cluster samples.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '1h'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

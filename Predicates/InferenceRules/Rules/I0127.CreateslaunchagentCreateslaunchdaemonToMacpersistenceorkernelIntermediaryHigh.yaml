@@ -1,0 +1,51 @@
+id: I0127
+name: CreateslaunchagentCreateslaunchdaemonToMacpersistenceorkernelIntermediaryHigh
+signature: CreatesLaunchAgent(f) ∨ CreatesLaunchDaemon(f) ∨ LoadsKernelExtension(f)
+  → MacPersistenceOrKernel(f) {Intermediary, high}
+category: Behavioral/OsSpecific
+scope:
+  object: file
+  postconditions:
+  - Derive: MacPersistenceOrKernel(f) {Intermediary, high}
+description: When CreatesLaunchAgent(f) ∨ CreatesLaunchDaemon(f) ∨ LoadsKernelExtension(f)
+  holds, assert MacPersistenceOrKernel(f) {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - CreatesLaunchAgent(f) ∨ CreatesLaunchDaemon(f) ∨ LoadsKernelExtension(f)=true
+  consequent:
+  - MacPersistenceOrKernel(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: launchd
+    fields:
+    - plist
+    - agent_or_daemon
+  - artifact: systemd
+    fields:
+    - unit_name
+    - user_scope
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C060
+  - id: C061
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

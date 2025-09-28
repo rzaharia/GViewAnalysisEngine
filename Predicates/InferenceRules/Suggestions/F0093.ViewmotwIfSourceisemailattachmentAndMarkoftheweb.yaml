@@ -1,0 +1,31 @@
+id: F0093
+code: E-701
+name: ViewmotwIfSourceisemailattachmentAndMarkoftheweb
+signature: 'SourceIsEmailAttachment(f) ∧ MarkOfTheWeb(f) ∧ ¬ViewedMOTW(f) → Suggest(ViewMOTW(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Attachment marked Internet‑origin. Review zone data.
+trigger_logic:
+  antecedent:
+  - SourceIsEmailAttachment(f)=true
+  - MarkOfTheWeb(f)=true
+  - ¬ViewedMOTW(f)=true
+  consequent:
+  - Suggest(ViewMOTW(f))
+action:
+  suggest: ViewMOTW(f)
+message: 'Attachment marked Internet‑origin. Review zone data.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '45m'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

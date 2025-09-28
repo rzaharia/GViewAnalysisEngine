@@ -1,0 +1,51 @@
+id: I0131
+name: IsinstallerMsirunscustomactionToInstallercustomactionsIntermediaryMed
+signature: IsInstaller(f) ∧ MsiRunsCustomAction(f) → InstallerCustomActions(f) {Intermediary,
+  med}
+category: Behavioral/InstallerMsi
+scope:
+  object: file
+  postconditions:
+  - Derive: InstallerCustomActions(f) {Intermediary, med}
+description: When IsInstaller(f) ∧ MsiRunsCustomAction(f) holds, assert InstallerCustomActions(f)
+  {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - IsInstaller(f)=true
+  - MsiRunsCustomAction(f)=true
+  consequent:
+  - InstallerCustomActions(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: msi_custom_actions
+    fields:
+    - action
+    - path
+  - artifact: netflow
+    fields:
+    - url
+    - bytes_out
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C051
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

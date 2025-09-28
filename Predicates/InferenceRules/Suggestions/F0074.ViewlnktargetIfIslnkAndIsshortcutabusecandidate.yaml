@@ -1,0 +1,32 @@
+id: F0074
+code: M-282
+name: ViewlnktargetIfIslnkAndIsshortcutabusecandidate
+signature: 'IsLnk(f) ∧ IsShortcutAbuseCandidate(f) ∧ ¬ViewedLnkTarget(f) → Suggest(ViewLnkTarget(f))'
+category: Suggestion/Lnk
+scope:
+  object: file
+  format: LNK
+description: Suspicious shortcut target. Review args & path?
+trigger_logic:
+  antecedent:
+  - IsLnk(f)=true
+  - IsShortcutAbuseCandidate(f)=true
+  - ¬ViewedLnkTarget(f)=true
+  consequent:
+  - Suggest(ViewLnkTarget(f))
+action:
+  suggest: ViewLnkTarget(f)
+message: 'Suspicious shortcut target. Review args & path?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  - id: C014  # 'Obfuscated Files or Information: LNK Icon Smuggling (T1027.012)'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

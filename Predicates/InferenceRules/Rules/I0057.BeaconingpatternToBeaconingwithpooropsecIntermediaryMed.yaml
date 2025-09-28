@@ -1,0 +1,71 @@
+id: I0057
+name: BeaconingpatternToBeaconingwithpooropsecIntermediaryMed
+signature: BeaconingPattern(f) ∧ (ContainsIpLiteral(f) ∨ DnsQueriesDGA(f)) → BeaconingWithPoorOpsec(f)
+  {Intermediary, med}
+category: Behavioral/NetworkC2
+scope:
+  object: file
+  postconditions:
+  - Derive: BeaconingWithPoorOpsec(f) {Intermediary, med}
+description: When BeaconingPattern(f) ∧ (ContainsIpLiteral(f) ∨ DnsQueriesDGA(f))
+  holds, assert BeaconingWithPoorOpsec(f) {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - BeaconingPattern(f)=true
+  - (ContainsIpLiteral(f) ∨ DnsQueriesDGA(f))=true
+  consequent:
+  - BeaconingWithPoorOpsec(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: netflow
+    fields:
+    - dst_ip
+    - dst_domain
+    - url
+    - proto
+    - bytes_out
+    - bytes_in
+    - ja3
+    - sni
+  - artifact: dns_logs
+    fields:
+    - qname
+    - rcode
+    - dga_score
+  - artifact: tls
+    fields:
+    - issuer
+    - subject
+    - self_signed
+    - validity
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Periodicity jitter < 10%: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Domain fronting
+  - CDN egress mimic
+  - Tor bridges
+  mitigations:
+  - JA3/JA4S fingerprinting
+  - SNI+DoH correlation
+  - Egress allowlists
+provenance:
+  citations:
+  - id: C036
+  - id: C047
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

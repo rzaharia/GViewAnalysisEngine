@@ -1,0 +1,49 @@
+id: I0135
+name: LnkabusepatternToLnkstealthlauncherIntermediaryMed
+signature: LnkAbusePattern(f) ∧ (TargetsScriptOrBinary(f) ∨ HasObfuscatedArguments(f))
+  → LnkStealthLauncher(f) {Intermediary, med}
+category: Behavioral/LnkAbuse
+scope:
+  object: file
+  postconditions:
+  - Derive: LnkStealthLauncher(f) {Intermediary, med}
+description: When LnkAbusePattern(f) ∧ (TargetsScriptOrBinary(f) ∨ HasObfuscatedArguments(f))
+  holds, assert LnkStealthLauncher(f) {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - LnkAbusePattern(f)=true
+  - (TargetsScriptOrBinary(f) ∨ HasObfuscatedArguments(f))=true
+  consequent:
+  - LnkStealthLauncher(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: lnk
+    fields:
+    - target
+    - args
+    - icon
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C014
+  - id: C015
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

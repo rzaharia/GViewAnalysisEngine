@@ -1,6 +1,7 @@
 citations:
 - id: C001
-  title: 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  title: 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office
+    documents'
   venue: Computers & Security
   year: 2021
   url: https://www.sciencedirect.com/science/article/pii/S0167404821004053
@@ -75,7 +76,8 @@ citations:
   year: 2025
   url: https://attack.mitre.org/techniques/T1547/009/
 - id: C016
-  title: 'Certified Malware: Measuring Breaches of Trust in the Windows Code-Signing PKI'
+  title: 'Certified Malware: Measuring Breaches of Trust in the Windows Code-Signing
+    PKI'
   venue: ACM CCS
   year: 2017
   url: https://umiacs.umd.edu/~tdumitra/papers/CCS-2017.pdf
@@ -90,12 +92,14 @@ citations:
   year: 2025
   url: https://www.bleepingcomputer.com/news/security/microsoft-trusted-signing-service-abused-to-code-sign-malware/
 - id: C019
-  title: Can You Trust a File’s Digital Signature? Zloader campaign abuses signature verification
+  title: Can You Trust a File’s Digital Signature? Zloader campaign abuses signature
+    verification
   venue: Check Point Research
   year: 2022
   url: https://research.checkpoint.com/2022/can-you-trust-a-files-digital-signature-new-zloader-campaign-exploits-microsofts-signature-verification-putting-users-at-risk/
 - id: C020
-  title: A PE header-based method for malware detection using clustering and deep embedding techniques
+  title: A PE header-based method for malware detection using clustering and deep
+    embedding techniques
   venue: Journal of Information Security and Applications
   year: 2021
   url: https://www.sciencedirect.com/science/article/abs/pii/S2214212621001046
@@ -224,3 +228,93 @@ citations:
   venue: MITRE ATT&CK
   year: 2025
   url: https://attack.mitre.org/techniques/T1204/002/
+- id: C046
+  title: 'Proxy: Multi-hop Proxy (T1090.003)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1090/003/
+- id: C047
+  title: 'Dynamic Resolution: Domain Generation Algorithms (T1568.002)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1568/002/
+- id: C048
+  title: 'Exfiltration Over Web Service: Exfiltration to Cloud Storage (T1567.002)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1567/002/
+- id: C049
+  title: 'Boot or Logon Autostart Execution: Registry Run Keys/Startup Folder (T1547.001)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1547/001/
+- id: C050
+  title: Windows Management Instrumentation (T1047)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1047/
+- id: C051
+  title: 'System Services: Service Execution (T1569.002)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1569/002/
+- id: C052
+  title: 'Remote Services: SMB/Windows Admin Shares (T1021.002)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1021/002/
+- id: C053
+  title: 'Remote Services: Windows Remote Management (T1021.006)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1021/006/
+- id: C054
+  title: 'OS Credential Dumping: LSASS Memory (T1003.001)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1003/001/
+- id: C055
+  title: Service Stop (T1489)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1489/
+- id: C056
+  title: 'Command and Scripting Interpreter: PowerShell (T1059.001)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1059/001/
+- id: C057
+  title: 'Command and Scripting Interpreter: Windows Command Shell (T1059.003)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1059/003/
+- id: C058
+  title: 'Abuse Elevation Control Mechanism: Bypass User Account Control (T1548.002)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1548/002/
+- id: C059
+  title: 'Create or Modify System Process: Windows Service (T1543.003)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1543/003/
+- id: C060
+  title: 'Create or Modify System Process: Launch Agent (T1543.001)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1543/001/
+- id: C061
+  title: 'Create or Modify System Process: Launch Daemon (T1543.004)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1543/004/
+- id: C062
+  title: Credentials from Web Browsers (T1555.003)
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1555/003/
+- id: C063
+  title: 'Impair Defenses: Disable or Modify Tools (T1562.001)'
+  venue: MITRE ATT&CK
+  year: 2025
+  url: https://attack.mitre.org/techniques/T1562/001/

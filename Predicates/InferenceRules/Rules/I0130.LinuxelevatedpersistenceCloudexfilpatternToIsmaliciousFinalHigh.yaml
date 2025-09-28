@@ -1,0 +1,50 @@
+id: I0130
+name: LinuxelevatedpersistenceCloudexfilpatternToIsmaliciousFinalHigh
+signature: LinuxElevatedPersistence(f) ∧ CloudExfilPattern(f) → IsMalicious(f) {Final,
+  high}
+category: Behavioral/OsSpecific
+scope:
+  object: file
+  postconditions:
+  - Flag: IsMalicious(f) {Final, high}
+description: When LinuxElevatedPersistence(f) ∧ CloudExfilPattern(f) holds, assert
+  IsMalicious(f) {Final, high}.
+trigger_logic:
+  antecedent:
+  - LinuxElevatedPersistence(f)=true
+  - CloudExfilPattern(f)=true
+  consequent:
+  - IsMalicious(f) {Final, high}=true
+evidence_binding:
+  requires:
+  - artifact: launchd
+    fields:
+    - plist
+    - agent_or_daemon
+  - artifact: systemd
+    fields:
+    - unit_name
+    - user_scope
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations: []
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,54 @@
+id: I0105
+name: SourceisemailattachmentHassuspiciousattachmentToRiskyattachmentcontextIntermedia
+signature: SourceIsEmailAttachment(f) ∧ HasSuspiciousAttachment(f) → RiskyAttachmentContext(f)
+  {Intermediary, high}
+category: Behavioral/EmailPhishing
+scope:
+  object: file
+  postconditions:
+  - Derive: RiskyAttachmentContext(f) {Intermediary, high}
+description: When SourceIsEmailAttachment(f) ∧ HasSuspiciousAttachment(f) holds, assert
+  RiskyAttachmentContext(f) {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - SourceIsEmailAttachment(f)=true
+  - HasSuspiciousAttachment(f)=true
+  consequent:
+  - RiskyAttachmentContext(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: email_headers
+    fields:
+    - from
+    - reply_to
+    - display_name
+    - spf
+    - dmarc
+  - artifact: message_body
+    fields:
+    - links
+    - attachments
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C045
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

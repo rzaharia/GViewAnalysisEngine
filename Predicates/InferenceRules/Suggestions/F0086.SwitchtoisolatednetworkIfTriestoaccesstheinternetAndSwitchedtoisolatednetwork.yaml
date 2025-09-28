@@ -1,0 +1,30 @@
+id: F0086
+code: S-401
+name: SwitchtoisolatednetworkIfTriestoaccesstheinternetAndSwitchedtoisolatednetwork
+signature: 'TriesToAccessTheInternet(f) ∧ ¬SwitchedToIsolatedNetwork(sbx) → Suggest(SwitchToIsolatedNetwork(sbx))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Switch to isolated/no‑Internet sandbox.
+trigger_logic:
+  antecedent:
+  - TriesToAccessTheInternet(f)=true
+  - ¬SwitchedToIsolatedNetwork(sbx)=true
+  consequent:
+  - Suggest(SwitchToIsolatedNetwork(sbx))
+action:
+  suggest: SwitchToIsolatedNetwork(sbx)
+message: 'Switch to isolated/no‑Internet sandbox.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,32 @@
+id: F0032
+code: U-113
+name: ViewregistrychangesIfLaunchedinsandboxAndViewedregistryactivity
+signature: 'LaunchedInSandbox(f) ∧ ¬ViewedRegistryActivity(f) → Suggest(ViewRegistryChanges(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Review registry changes?
+trigger_logic:
+  antecedent:
+  - LaunchedInSandbox(f)=true
+  - ¬ViewedRegistryActivity(f)=true
+  consequent:
+  - Suggest(ViewRegistryChanges(f))
+action:
+  suggest: ViewRegistryChanges(f)
+message: 'Review registry changes?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '15m'
+tags:
+  - dynamic
+  - registry
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

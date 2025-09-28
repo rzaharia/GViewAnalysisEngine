@@ -1,0 +1,33 @@
+id: F0044
+code: M-204
+name: ViewpersistenceIfHasmacropersistenceAndPersistencereviewed
+signature: 'HasMacroPersistence(f) ∧ ¬PersistenceReviewed(f) → Suggest(ViewPersistence(f))'
+category: Suggestion/Office
+scope:
+  object: file
+  format: generic
+description: Macro attempts persistence. Review startup/task/service writes?
+trigger_logic:
+  antecedent:
+  - HasMacroPersistence(f)=true
+  - ¬PersistenceReviewed(f)=true
+  consequent:
+  - Suggest(ViewPersistence(f))
+action:
+  suggest: ViewPersistence(f)
+message: 'Macro attempts persistence. Review startup/task/service writes?'
+explanation: 'Office macros are a common initial execution vector; reviewing macro content improves triage and reveals downloader or persistence code.'
+cooldown: '30m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  - id: C001  # 'Invoice #31415 attached: Automated analysis of malicious Microsoft Office documents'
+  - id: C045  # 'User Execution: Malicious File (T1204.002)'
+  - id: C009  # 'Cheat Sheet for Analyzing Malicious Documents'
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

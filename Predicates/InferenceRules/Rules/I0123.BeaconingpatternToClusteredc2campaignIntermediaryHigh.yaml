@@ -1,0 +1,48 @@
+id: I0123
+name: BeaconingpatternToClusteredc2campaignIntermediaryHigh
+signature: (BeaconingPattern(f1) ∧ BeaconingPattern(f2) ∧ SameC2Family(f1,f2)) → ClusteredC2Campaign(f1,f2)
+  {Intermediary, high}
+category: Behavioral/CampaignCorrelation
+scope:
+  object: file
+  postconditions:
+  - Derive: ClusteredC2Campaign(f1,f2) {Intermediary, high}
+description: When (BeaconingPattern(f1) ∧ BeaconingPattern(f2) ∧ SameC2Family(f1,f2))
+  holds, assert ClusteredC2Campaign(f1,f2) {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - (BeaconingPattern(f1)=true
+  - BeaconingPattern(f2)=true
+  - SameC2Family(f1,f2))=true
+  consequent:
+  - ClusteredC2Campaign(f1,f2) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: cluster
+    fields:
+    - c2_family
+    - overlap_indicators
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Periodicity jitter < 10%: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C036
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: high
+version: 1

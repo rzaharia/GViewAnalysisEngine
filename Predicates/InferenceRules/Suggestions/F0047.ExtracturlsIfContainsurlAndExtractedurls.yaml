@@ -1,0 +1,30 @@
+id: F0047
+code: M-212
+name: ExtracturlsIfContainsurlAndExtractedurls
+signature: 'ContainsUrl(f) ∧ ¬ExtractedUrls(f) → Suggest(ExtractUrls(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Extract URLs for pivoting & blocking?
+trigger_logic:
+  antecedent:
+  - ContainsUrl(f)=true
+  - ¬ExtractedUrls(f)=true
+  consequent:
+  - Suggest(ExtractUrls(f))
+action:
+  suggest: ExtractUrls(f)
+message: 'Extract URLs for pivoting & blocking?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

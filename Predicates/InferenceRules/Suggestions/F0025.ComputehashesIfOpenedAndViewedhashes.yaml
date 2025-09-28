@@ -1,0 +1,32 @@
+id: F0025
+code: U-100
+name: ComputehashesIfOpenedAndViewedhashes
+signature: 'Opened(f) ∧ ¬ViewedHashes(f) → Suggest(ComputeHashes(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Compute hashes for correlation & TI lookups?
+trigger_logic:
+  antecedent:
+  - Opened(f)=true
+  - ¬ViewedHashes(f)=true
+  consequent:
+  - Suggest(ComputeHashes(f))
+action:
+  suggest: ComputeHashes(f)
+message: 'Compute hashes for correlation & TI lookups?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags:
+  - workflow
+  - hash
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

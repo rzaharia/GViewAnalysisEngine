@@ -1,0 +1,32 @@
+id: F0035
+code: U-122
+name: CreatesnapshotIfOpenedAndCreatedsnapshot
+signature: 'Opened(f) ∧ ¬CreatedSnapshot(sbx, any) → Suggest(CreateSnapshot(sbx))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Create VM snapshot before detonation?
+trigger_logic:
+  antecedent:
+  - Opened(f)=true
+  - ¬CreatedSnapshot(sbx, any)=true
+  consequent:
+  - Suggest(CreateSnapshot(sbx))
+action:
+  suggest: CreateSnapshot(sbx)
+message: 'Create VM snapshot before detonation?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '1h'
+tags:
+  - safety
+  - snapshot
+severity:
+  level: info
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

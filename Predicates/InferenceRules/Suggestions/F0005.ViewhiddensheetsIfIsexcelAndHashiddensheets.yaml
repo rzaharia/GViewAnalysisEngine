@@ -1,0 +1,32 @@
+id: F0005
+code: F-005
+name: ViewhiddensheetsIfIsexcelAndHashiddensheets
+signature: 'IsExcel(f) ∧ HasHiddenSheets(f) → Suggest(ViewHiddenSheets(f))'
+category: Suggestion/Office
+scope:
+  object: file
+  format: OOXML/OLE
+description: Hidden/VeryHidden sheets found. Show list?
+trigger_logic:
+  antecedent:
+  - IsExcel(f)=true
+  - HasHiddenSheets(f)=true
+  consequent:
+  - Suggest(ViewHiddenSheets(f))
+action:
+  suggest: ViewHiddenSheets(f)
+message: 'Hidden/VeryHidden sheets found. Show list?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags:
+  - excel
+  - stealth
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

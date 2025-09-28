@@ -1,0 +1,30 @@
+id: F0058
+code: M-234
+name: ViewprocesstreeIfDropsandexecutesAndViewedprocesstree
+signature: 'DropsAndExecutes(f) ∧ ¬ViewedProcessTree(f) → Suggest(ViewProcessTree(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Drop‑and‑run sequence observed. Open process tree?
+trigger_logic:
+  antecedent:
+  - DropsAndExecutes(f)=true
+  - ¬ViewedProcessTree(f)=true
+  consequent:
+  - Suggest(ViewProcessTree(f))
+action:
+  suggest: ViewProcessTree(f)
+message: 'Drop‑and‑run sequence observed. Open process tree?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '20m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

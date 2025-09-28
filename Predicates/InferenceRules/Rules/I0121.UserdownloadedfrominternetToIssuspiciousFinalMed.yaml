@@ -1,0 +1,51 @@
+id: I0121
+name: UserdownloadedfrominternetToIssuspiciousFinalMed
+signature: UserDownloadedFromInternet(f) ∧ (ArchiveContainsPE(f) ∨ ScriptDownloader(f)
+  ∨ OfficeEmbedsExecutable(f)) → IsSuspicious(f) {Final, med}
+category: Behavioral/UserCoupling
+scope:
+  object: file
+  postconditions:
+  - Flag: IsSuspicious(f) {Final, med}
+description: When UserDownloadedFromInternet(f) ∧ (ArchiveContainsPE(f) ∨ ScriptDownloader(f)
+  ∨ OfficeEmbedsExecutable(f)) holds, assert IsSuspicious(f) {Final, med}.
+trigger_logic:
+  antecedent:
+  - UserDownloadedFromInternet(f)=true
+  - (ArchiveContainsPE(f) ∨ ScriptDownloader(f) ∨ OfficeEmbedsExecutable(f))=true
+  consequent:
+  - IsSuspicious(f) {Final, med}=true
+evidence_binding:
+  requires:
+  - artifact: ui_audit
+    fields:
+    - user_action
+    - timestamp
+  - artifact: mark_of_web
+    fields:
+    - zone
+    - referrer
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C045
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

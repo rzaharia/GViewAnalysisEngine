@@ -1,0 +1,58 @@
+id: I0087
+name: UsesremoteservicecreationUsessmbToRemoteservicelateralIntermediaryHigh
+signature: UsesRemoteServiceCreation(f) ∧ UsesSmb(f) → RemoteServiceLateral(f) {Intermediary,
+  high}
+category: Behavioral/LateralMovement
+scope:
+  object: file
+  postconditions:
+  - Derive: RemoteServiceLateral(f) {Intermediary, high}
+description: When UsesRemoteServiceCreation(f) ∧ UsesSmb(f) holds, assert RemoteServiceLateral(f)
+  {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - UsesRemoteServiceCreation(f)=true
+  - UsesSmb(f)=true
+  consequent:
+  - RemoteServiceLateral(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: smb_logs
+    fields:
+    - share
+    - ip
+    - auth_user
+  - artifact: winrm_logs
+    fields:
+    - host
+    - user
+  - artifact: service_control
+    fields:
+    - sc_action
+    - service_name
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C059
+  - id: C051
+  - id: C052
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,32 @@
+id: F0033
+code: U-120
+name: OpeninsafeviewIfOpenedAndIsactivecontentcapable
+signature: 'Opened(f) ∧ IsActiveContentCapable(f) ∧ ¬OpenedSafely(f) → Suggest(OpenInSafeView(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Use protected view to avoid executing active content?
+trigger_logic:
+  antecedent:
+  - Opened(f)=true
+  - IsActiveContentCapable(f)=true
+  - ¬OpenedSafely(f)=true
+  consequent:
+  - Suggest(OpenInSafeView(f))
+action:
+  suggest: OpenInSafeView(f)
+message: 'Use protected view to avoid executing active content?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags:
+  - safety
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

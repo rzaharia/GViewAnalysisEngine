@@ -1,0 +1,33 @@
+id: F0017
+code: F-033
+name: ViewsignatureproblemsIfIspeAndIssigned
+signature: 'IsPe(f) ∧ IsSigned(f) ∧ ¬SignatureValid(f) → Suggest(ViewSignatureProblems(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Invalid/revoked signature. Inspect chain & timestamp?
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - IsSigned(f)=true
+  - ¬SignatureValid(f)=true
+  consequent:
+  - Suggest(ViewSignatureProblems(f))
+action:
+  suggest: ViewSignatureProblems(f)
+message: 'Invalid/revoked signature. Inspect chain & timestamp?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags:
+  - pe
+  - signing
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

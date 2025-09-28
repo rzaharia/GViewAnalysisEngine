@@ -1,0 +1,31 @@
+id: F0095
+code: A-800
+name: ViewdoubleextensionsIfIsarchiveAndArchivedoubleextensionmembers
+signature: 'IsArchive(f) ∧ ArchiveDoubleExtensionMembers(f) ∧ ¬ViewedDoubleExtensions(f) → Suggest(ViewDoubleExtensions(f))'
+category: Suggestion/Archive
+scope:
+  object: file
+  format: ZIP/RAR/7z
+description: Suspicious member names (.pdf.exe). Review.
+trigger_logic:
+  antecedent:
+  - IsArchive(f)=true
+  - ArchiveDoubleExtensionMembers(f)=true
+  - ¬ViewedDoubleExtensions(f)=true
+  consequent:
+  - Suggest(ViewDoubleExtensions(f))
+action:
+  suggest: ViewDoubleExtensions(f)
+message: 'Suspicious member names (.pdf.exe). Review.'
+explanation: 'Archives are frequently used to bypass filtering; reviewing members and extensions helps catch droppers and masquerading.'
+cooldown: '45m'
+tags: []
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

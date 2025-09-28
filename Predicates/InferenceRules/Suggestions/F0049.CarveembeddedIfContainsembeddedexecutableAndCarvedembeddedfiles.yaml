@@ -1,0 +1,30 @@
+id: F0049
+code: M-214
+name: CarveembeddedIfContainsembeddedexecutableAndCarvedembeddedfiles
+signature: 'ContainsEmbeddedExecutable(f) ∧ ¬CarvedEmbeddedFiles(f) → Suggest(CarveEmbedded(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Embedded executable detected. Extract for triage?
+trigger_logic:
+  antecedent:
+  - ContainsEmbeddedExecutable(f)=true
+  - ¬CarvedEmbeddedFiles(f)=true
+  consequent:
+  - Suggest(CarveEmbedded(f))
+action:
+  suggest: CarveEmbedded(f)
+message: 'Embedded executable detected. Extract for triage?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '30m'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

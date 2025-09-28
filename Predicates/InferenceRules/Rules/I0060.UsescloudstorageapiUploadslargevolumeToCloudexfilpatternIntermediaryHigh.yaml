@@ -1,0 +1,71 @@
+id: I0060
+name: UsescloudstorageapiUploadslargevolumeToCloudexfilpatternIntermediaryHigh
+signature: UsesCloudStorageApi(f) ∧ UploadsLargeVolume(f) → CloudExfilPattern(f) {Intermediary,
+  high}
+category: Behavioral/NetworkC2
+scope:
+  object: file
+  postconditions:
+  - Derive: CloudExfilPattern(f) {Intermediary, high}
+description: When UsesCloudStorageApi(f) ∧ UploadsLargeVolume(f) holds, assert CloudExfilPattern(f)
+  {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - UsesCloudStorageApi(f)=true
+  - UploadsLargeVolume(f)=true
+  consequent:
+  - CloudExfilPattern(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: netflow
+    fields:
+    - dst_ip
+    - dst_domain
+    - url
+    - proto
+    - bytes_out
+    - bytes_in
+    - ja3
+    - sni
+  - artifact: dns_logs
+    fields:
+    - qname
+    - rcode
+    - dga_score
+  - artifact: tls
+    fields:
+    - issuer
+    - subject
+    - self_signed
+    - validity
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Domain fronting
+  - CDN egress mimic
+  - Tor bridges
+  mitigations:
+  - JA3/JA4S fingerprinting
+  - SNI+DoH correlation
+  - Egress allowlists
+provenance:
+  citations:
+  - id: C032
+  - id: C048
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: medium
+version: 1

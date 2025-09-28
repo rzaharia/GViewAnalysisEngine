@@ -1,0 +1,30 @@
+id: F0091
+code: C-602
+name: AddtocaseIfHashinthreatintelAndAddedtocase
+signature: 'HashInThreatIntel(f) ∧ ¬AddedToCase(f, any) → Suggest(AddToCase(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Track intel‑matched sample in your case.
+trigger_logic:
+  antecedent:
+  - HashInThreatIntel(f)=true
+  - ¬AddedToCase(f, any)=true
+  consequent:
+  - Suggest(AddToCase(f))
+action:
+  suggest: AddToCase(f)
+message: 'Track intel‑matched sample in your case.'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '1h'
+tags: []
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

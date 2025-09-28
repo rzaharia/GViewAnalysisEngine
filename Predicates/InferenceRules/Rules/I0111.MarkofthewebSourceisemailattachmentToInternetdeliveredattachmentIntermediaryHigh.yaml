@@ -1,0 +1,56 @@
+id: I0111
+name: MarkofthewebSourceisemailattachmentToInternetdeliveredattachmentIntermediaryHigh
+signature: MarkOfTheWeb(f) ∧ SourceIsEmailAttachment(f) → InternetDeliveredAttachment(f)
+  {Intermediary, high}
+category: Behavioral/Reputation
+scope:
+  object: file
+  postconditions:
+  - Derive: InternetDeliveredAttachment(f) {Intermediary, high}
+description: When MarkOfTheWeb(f) ∧ SourceIsEmailAttachment(f) holds, assert InternetDeliveredAttachment(f)
+  {Intermediary, high}.
+trigger_logic:
+  antecedent:
+  - MarkOfTheWeb(f)=true
+  - SourceIsEmailAttachment(f)=true
+  consequent:
+  - InternetDeliveredAttachment(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: mark_of_web
+    fields:
+    - zone
+    - referrer
+  - artifact: signature
+    fields:
+    - subject
+    - chain_status
+  - artifact: threat_intel
+    fields:
+    - feeds
+    - first_seen
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C039
+  - id: C045
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

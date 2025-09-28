@@ -1,0 +1,30 @@
+id: F0063
+code: M-250
+name: MonitorencryptionIfMassfilemodificationAndViewedencryptionmonitor
+signature: 'MassFileModification(f) ∧ ¬ViewedEncryptionMonitor(f) → Suggest(MonitorEncryption(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Rapid file modifications. Start encryption monitor?
+trigger_logic:
+  antecedent:
+  - MassFileModification(f)=true
+  - ¬ViewedEncryptionMonitor(f)=true
+  consequent:
+  - Suggest(MonitorEncryption(f))
+action:
+  suggest: MonitorEncryption(f)
+message: 'Rapid file modifications. Start encryption monitor?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '10m'
+tags: []
+severity:
+  level: critical
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

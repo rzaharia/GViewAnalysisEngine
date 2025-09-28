@@ -1,0 +1,52 @@
+id: I0078
+name: DropskerneldriverLoadskerneldriverToKernelactivityIntermediaryMed
+signature: DropsKernelDriver(f) ∨ LoadsKernelDriver(f) → KernelActivity(f) {Intermediary,
+  med}
+category: Behavioral/PrivilegeCreds
+scope:
+  object: file
+  postconditions:
+  - Derive: KernelActivity(f) {Intermediary, med}
+description: When DropsKernelDriver(f) ∨ LoadsKernelDriver(f) holds, assert KernelActivity(f)
+  {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - DropsKernelDriver(f) ∨ LoadsKernelDriver(f)=true
+  consequent:
+  - KernelActivity(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: security_event_logs
+    fields:
+    - event_id
+    - subject_user
+    - target_process
+  - artifact: process_tree
+    fields:
+    - privileges
+    - reads_lsass
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C058
+  - id: C054
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

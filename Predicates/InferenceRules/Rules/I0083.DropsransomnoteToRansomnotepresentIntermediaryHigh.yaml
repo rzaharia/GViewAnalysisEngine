@@ -1,0 +1,58 @@
+id: I0083
+name: DropsransomnoteToRansomnotepresentIntermediaryHigh
+signature: DropsRansomNote(f) → RansomNotePresent(f) {Intermediary, high}
+category: Behavioral/Ransomware
+scope:
+  object: file
+  postconditions:
+  - Derive: RansomNotePresent(f) {Intermediary, high}
+description: When DropsRansomNote(f) holds, assert RansomNotePresent(f) {Intermediary,
+  high}.
+trigger_logic:
+  antecedent:
+  - DropsRansomNote(f)=true
+  consequent:
+  - RansomNotePresent(f) {Intermediary, high}=true
+evidence_binding:
+  requires:
+  - artifact: fs_events
+    fields:
+    - modified_files
+    - entropy_delta
+    - extensions_changed
+  - artifact: vssadmin_events
+    fields:
+    - operation
+    - result
+  - artifact: services
+    fields:
+    - name
+    - action
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses:
+  - Sparse encryption
+  - Selective VSS deletions
+  mitigations:
+  - FS honeypots
+  - VSS event alerting
+provenance:
+  citations:
+  - id: C031
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

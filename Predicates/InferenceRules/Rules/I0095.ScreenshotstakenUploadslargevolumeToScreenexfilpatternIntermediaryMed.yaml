@@ -1,0 +1,59 @@
+id: I0095
+name: ScreenshotstakenUploadslargevolumeToScreenexfilpatternIntermediaryMed
+signature: ScreenshotsTaken(f) ∧ UploadsLargeVolume(f) → ScreenExfilPattern(f) {Intermediary,
+  med}
+category: Behavioral/Exfiltration
+scope:
+  object: file
+  postconditions:
+  - Derive: ScreenExfilPattern(f) {Intermediary, med}
+description: When ScreenshotsTaken(f) ∧ UploadsLargeVolume(f) holds, assert ScreenExfilPattern(f)
+  {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - ScreenshotsTaken(f)=true
+  - UploadsLargeVolume(f)=true
+  consequent:
+  - ScreenExfilPattern(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: netflow
+    fields:
+    - dst_domain
+    - url
+    - bytes_out
+  - artifact: cloud_api
+    fields:
+    - provider
+    - endpoint
+    - object_count
+  - artifact: timeline
+    fields:
+    - doc_reads
+    - archive_ops
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if corroborated by ≥2 telemetry sources: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C032
+  - id: C048
+  - id: C041
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

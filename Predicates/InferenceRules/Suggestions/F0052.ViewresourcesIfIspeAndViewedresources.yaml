@@ -1,0 +1,31 @@
+id: F0052
+code: M-222
+name: ViewresourcesIfIspeAndViewedresources
+signature: 'IsPe(f) ∧ ¬ViewedResources(f) ∧ ContainsEmbeddedScript(f) → Suggest(ViewResources(f))'
+category: Suggestion/Scripts
+scope:
+  object: file
+  format: Script
+description: Script content embedded. Inspect resources?
+trigger_logic:
+  antecedent:
+  - IsPe(f)=true
+  - ¬ViewedResources(f)=true
+  - ContainsEmbeddedScript(f)=true
+  consequent:
+  - Suggest(ViewResources(f))
+action:
+  suggest: ViewResources(f)
+message: 'Script content embedded. Inspect resources?'
+explanation: 'Deobfuscation and dynamic invocation tracing expose hidden URLs, loaders, and privilege escalation steps.'
+cooldown: '45m'
+tags: []
+severity:
+  level: warn
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

@@ -1,0 +1,51 @@
+id: I0132
+name: InstallercustomactionsToInstallerdownloadsorscriptsIntermediaryMed
+signature: InstallerCustomActions(f) ∧ (BinarySpawnsScripting(f) ∨ DownloadsFromInternet(f))
+  → InstallerDownloadsOrScripts(f) {Intermediary, med}
+category: Behavioral/InstallerMsi
+scope:
+  object: file
+  postconditions:
+  - Derive: InstallerDownloadsOrScripts(f) {Intermediary, med}
+description: When InstallerCustomActions(f) ∧ (BinarySpawnsScripting(f) ∨ DownloadsFromInternet(f))
+  holds, assert InstallerDownloadsOrScripts(f) {Intermediary, med}.
+trigger_logic:
+  antecedent:
+  - InstallerCustomActions(f)=true
+  - (BinarySpawnsScripting(f) ∨ DownloadsFromInternet(f))=true
+  consequent:
+  - InstallerDownloadsOrScripts(f) {Intermediary, med}=true
+evidence_binding:
+  requires:
+  - artifact: msi_custom_actions
+    fields:
+    - action
+    - path
+  - artifact: netflow
+    fields:
+    - url
+    - bytes_out
+  retention_hint: Store ±120s around key triggering events.
+confidence:
+  base: 0.6
+  modifiers:
+  - 'if Endpoint not in allowlist and SNI mismatch: +0.05'
+  calibration: isotonic_2025_09
+severity:
+  level: info
+  rationale: Derived from rule tier and observed behaviors.
+conflict_handling:
+  contradicts:
+  - 'Rule: R-1980 ''BenignAutoUpdate'''
+  resolution: Prefer higher confidence unless allowlist(domain or signer) applies.
+adversary_evasion:
+  known_bypasses: []
+  mitigations: []
+provenance:
+  citations:
+  - id: C038
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1

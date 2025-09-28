@@ -1,0 +1,31 @@
+id: F0037
+code: U-131
+name: GeneratereportIfIsmaliciousAndGeneratedreport
+signature: 'IsMalicious(f) ∧ ¬GeneratedReport(f, any) → Suggest(GenerateReport(f))'
+category: Suggestion/General
+scope:
+  object: file
+  format: generic
+description: Generate a report with observed IOCs?
+trigger_logic:
+  antecedent:
+  - IsMalicious(f)=true
+  - ¬GeneratedReport(f, any)=true
+  consequent:
+  - Suggest(GenerateReport(f))
+action:
+  suggest: GenerateReport(f)
+message: 'Generate a report with observed IOCs?'
+explanation: 'This suggestion accelerates investigation by opening the most relevant viewer for the detected indicators.'
+cooldown: '1h'
+tags:
+  - report
+severity:
+  level: high
+provenance:
+  citations:
+  author: '@gview-team'
+implementation:
+  status: planned
+  perf_cost: low
+version: 1
