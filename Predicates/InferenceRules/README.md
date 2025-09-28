@@ -256,3 +256,8 @@ To fully use these proposed features, the UI component in GView might need an ov
 - Put **reasoning** into `explanation`/`rationale` instead of bloating `description`.
 - Use `adversary_evasion` to acknowledge blind spots and list practical mitigations (good for peer‑review).
 - Keep `perf_cost` honest—reviewers value transparency on deployability.
+
+---
+
+### See the [rules detailed list](Rules/README.md) for detailed notes on intermediary rules
+### See the [suggestions detailed list](Suggestions/README.md) for detailed notes on suggestions
